@@ -33,8 +33,9 @@ export class LoginGraphqlResolver {
             const cookieOptions = {
                 sameSite: "none",
                 // httpOnly: true,
-                secure: true,
-
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 1000 * 60 * 60 * 24, // 1 day
+                domain: undefined,
                 // path: "/"
             }
             context.res.cookie(
