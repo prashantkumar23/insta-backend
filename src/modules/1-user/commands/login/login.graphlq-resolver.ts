@@ -36,10 +36,10 @@ export class LoginGraphqlResolver {
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.ExpiresIn, // 1 day
             }
-            context.res.setHeader(
+            context.res.cookie(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
-            context.res.setHeader(
+            context.res.cookie(
                 'Idtoken',
                 response.AuthenticationResult.IdToken, cookieOptions);
             console.log("response", response)
