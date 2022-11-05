@@ -1,0 +1,334 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ConfirmCodeResponse {
+  message: String!
+}
+
+type LoginResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type IAWSUserDetail {
+  username: String!
+  name: String!
+  email: String!
+}
+
+type User {
+  userDetails: IAWSUserDetail
+  message: String!
+}
+
+type CodeDeliveryDetails {
+  Destination: String!
+  DeliveryMedium: String!
+  AttributeName: String!
+}
+
+type SignUpResponse {
+  UserConfirmed: Boolean!
+  CodeDeliveryDetails: CodeDeliveryDetails!
+  UserSub: String!
+}
+
+type FollowResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type UnfollowResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type SearchResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type LogoutResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type UserDetail {
+  id: String!
+  name: String!
+  username: String!
+  pic: String!
+  email: String!
+  email_verified: Boolean!
+  numberOfPosts: Float!
+  numberOfFollowers: Float!
+  numberOfFollowings: Float!
+}
+
+type GetUserDetailResponse {
+  user: UserDetail!
+  message: String!
+  isSuccess: Boolean!
+}
+
+type GetUserPostResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type GetOtherUserDetailResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type RemoveFromFollowingResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type UserRecommendation {
+  _id: String!
+  name: String!
+  username: String!
+  pic: String!
+  numberOfPosts: Float!
+  numberOffollowings: Float!
+  numberOffollowers: Float!
+  followedByMe: Boolean!
+}
+
+type GetOtherUserRecommendationResponse {
+  message: String!
+  isSuccess: Boolean!
+  users: [UserRecommendation!]!
+}
+
+type CreatePostResponse {
+  message: String!
+  isSuccess: Boolean!
+}
+
+type LikePostResponse {
+  isSuccess: Boolean!
+}
+
+type UnlikePostResponse {
+  isSuccess: Boolean!
+}
+
+type DeletePostResponse {
+  isSuccess: Boolean!
+  message: String!
+}
+
+type PostUser {
+  id: String!
+  name: String!
+  username: String!
+  pic: String!
+}
+
+type FeedPost {
+  id: String!
+  caption: String!
+  imageUrl: String!
+  likes: Float!
+  comments: Float!
+  createdAt: String!
+  user: PostUser!
+  wasLikeByMe: Boolean!
+}
+
+type GetFeedPostResponse {
+  message: String!
+  isSuccess: Boolean!
+  posts: [FeedPost!]!
+  count: Float!
+}
+
+type SpecificPostUser {
+  _id: String!
+  name: String!
+  username: String!
+  pic: String!
+}
+
+type SpecificPostComment {
+  _id: String!
+  comment: String!
+  whoCommented: SpecificPostUser!
+}
+
+type SpecificPost {
+  _id: String!
+  userId: SpecificPostUser!
+  imageUrl: String!
+  caption: String!
+  likes: Float!
+  comments: Float!
+  commentIds: [SpecificPostComment!]!
+  createdAt: String!
+  wasLikeByMe: Boolean!
+  postUrl: String!
+}
+
+type GetSpecificPostResponse {
+  message: String!
+  isSuccess: Boolean!
+  post: SpecificPost!
+}
+
+type CreateCommentResponseGraphql {
+  _id: String!
+  whoCommented: String!
+  postId: String!
+  comment: String!
+  likes: Float!
+  wasLikeByMe: Boolean!
+}
+
+type DeleteCommentResponseGraphql {
+  message: String!
+}
+
+type Query {
+  whoAmI: User
+  search(input: Search!): SearchResponse!
+  getUserDetail: GetUserDetailResponse
+  getUserPost(input: GetUserPost!): GetUserPostResponse!
+  getOtherUserDetail(input: GetOtherUserDetail!): GetOtherUserDetailResponse!
+  getUserRecommendation(input: GetUserRecommendation!): GetOtherUserRecommendationResponse!
+  getFeedPost(input: GetFeedPostRequest!): GetFeedPostResponse!
+  getSpecificPost(input: GetSpecificPostRequest!): GetSpecificPostResponse!
+}
+
+input Search {
+  searchTerm: String!
+}
+
+input GetUserPost {
+  username: String!
+}
+
+input GetOtherUserDetail {
+  username: String!
+  userId: String!
+}
+
+input GetUserRecommendation {
+  limit: Float!
+  userId: String!
+}
+
+input GetFeedPostRequest {
+  userId: String!
+  limit: Float!
+  skip: Float!
+}
+
+input GetSpecificPostRequest {
+  postId: String!
+  userId: String!
+}
+
+type Mutation {
+  signup(input: SignUpRequest!): SignUpResponse!
+  confirmCode(input: ConfirmCodeRequest!): ConfirmCodeResponse!
+  login(input: LoginRequest!): LoginResponse!
+  logout(input: LogoutRequest!): LogoutResponse!
+  forgotPassword(input: ForgotPasswordRequest!): ConfirmCodeResponse!
+  resetPassword(input: ResetPasswordRequest!): ConfirmCodeResponse!
+  follow(input: FollowRequestDTO!): FollowResponse!
+  unfollow(input: UnfollowRequestDTO!): UnfollowResponse!
+  removeFromFollowing(input: RemoveFromFollowingRequestDto!): RemoveFromFollowingResponse!
+  createPost(input: CreatePostFromUserRequest!): CreatePostResponse!
+  likePost(input: LikePostRequest!): LikePostResponse!
+  unlikePost(input: UnLikePostRequest!): UnlikePostResponse!
+  deletePost(input: DeletePostRequest!): DeletePostResponse!
+  createComment(input: CreateCommentRequest!): CreateCommentResponseGraphql!
+  deleteComment(input: DeleteCommentRequest!): DeleteCommentResponseGraphql!
+}
+
+input SignUpRequest {
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+}
+
+input ConfirmCodeRequest {
+  code: String!
+  username: String!
+}
+
+input LoginRequest {
+  username: String!
+  password: String!
+}
+
+input LogoutRequest {
+  accessToken: String!
+}
+
+input ForgotPasswordRequest {
+  username: String!
+}
+
+input ResetPasswordRequest {
+  username: String!
+  code: String!
+  newPassword: String!
+}
+
+input FollowRequestDTO {
+  whoToFollow: String!
+  username: String!
+}
+
+input UnfollowRequestDTO {
+  whoToUnfollow: String!
+  username: String!
+}
+
+input RemoveFromFollowingRequestDto {
+  userId: String!
+  whoToRemove: String!
+}
+
+input CreatePostFromUserRequest {
+  userId: String!
+  username: String!
+  caption: String!
+  file: Upload!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input LikePostRequest {
+  postId: String!
+  userId: String!
+}
+
+input UnLikePostRequest {
+  postId: String!
+  userId: String!
+}
+
+input DeletePostRequest {
+  postId: String!
+  s3bucketObjectIds: [String!]!
+}
+
+input CreateCommentRequest {
+  postId: String!
+  whoCommented: String!
+  comment: String!
+  wasLikeByMe: Boolean!
+}
+
+input DeleteCommentRequest {
+  commentId: String!
+  postId: String!
+}

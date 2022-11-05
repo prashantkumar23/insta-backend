@@ -1,0 +1,37 @@
+APIs Implementation and Integration: 
+1- Follow API- done
+2- Unfollow API - done
+3- GetPostById API ( along with associated comments) - done
+4- GetFeedPost API (no comments associated) - done
+5- Logout API - done
+6- Like API - done
+7- Unlike API - done
+8- Add Comment API - done
+9- Delete Comment API - done
+10- Search API - done
+11- Login API - done
+12- Register API- done
+13- CreatePost API - done
+14- DeletePost API - done
+15- UserDetail API - done
+16- GetUserPosts API - done
+17- GetOtherUserDetail API (check if followed by requested user or not) - done
+18- RemoveFromFollow API - done
+19- Delete Account API (along all posts and comments associated with that user)
+20- GetUsersRecommedations API  
+
+Futue APIs
+1- WhoLikesThisPost API
+
+Pending Points:
+1- Infinte Scroll
+2- Search Debouncing - done
+3- Responsivness (Almost done)
+4- API integrations and UI adjustment along with.
+5- Optimistic Updates
+6- Type Correction on frontend and backend
+
+
+Usefull links:
+
+https://stackoverflow.com/questions/14348516/cascade-style-delete-in-mongoose
