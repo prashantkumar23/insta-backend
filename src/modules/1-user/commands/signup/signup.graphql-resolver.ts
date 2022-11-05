@@ -13,7 +13,7 @@ export class SignUpGraphqlResolver {
     constructor(private readonly commandBus: CommandBus) { }
 
     @Query(() => String) 
-    async helloWord() {
+    async helloWorld() {
         return "Hello World!"
     }
 

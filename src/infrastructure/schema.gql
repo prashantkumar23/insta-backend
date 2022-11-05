@@ -193,7 +193,7 @@ type DeleteCommentResponseGraphql {
 }
 
 type Query {
-  helloWord: String!
+  helloWorld: String!
   whoAmI: User
   search(input: Search!): SearchResponse!
   getUserDetail: GetUserDetailResponse
