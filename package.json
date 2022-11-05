@@ -14,13 +14,14 @@
   },
   "homepage": "https://github.com:prashantkumar23/blogBackend.git",
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && node ./dist/index.js",
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
+    "typescript": "latest",
     "@aws-sdk/client-s3": "^3.142.0",
     "@nestjs/apollo": "^10.0.19",
     "@nestjs/common": "^9.0.5",
