@@ -31,7 +31,7 @@ export class LoginGraphqlResolver {
             const command = new LoginCommand(input)
             const response = await this.commandBus.execute(command)
             const cookieOptions = {
-                sameSite: "none",
+                sameSite: "strict",
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day

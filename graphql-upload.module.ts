@@ -30,7 +30,6 @@ import { join } from 'path';
             cors: {
               credential: true,
               origin: true,
-              exposedHeaders: 'Set-Cookie, Access-Control-Request-Headers',
             },
             context: ({req, res}) => ({req, res}),
           }),
