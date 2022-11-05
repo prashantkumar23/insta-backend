@@ -33,7 +33,7 @@ export class LoginGraphqlResolver {
             const cookieOptions = {
                 sameSite: "none",
                 // httpOnly: true,
-                // secure: true,
+                secure: true,
                 // path: "/"
             }
             context.res.cookie(
