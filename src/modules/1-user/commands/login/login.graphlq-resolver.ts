@@ -32,11 +32,9 @@ export class LoginGraphqlResolver {
             const response = await this.commandBus.execute(command)
             const cookieOptions = {
                 sameSite: "none",
-                // httpOnly: true,
+                httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 maxAge: response.ExpiresIn, // 1 day
-                domain: "http://localhost:3000"
-                // path: "/"
             }
             context.res.cookie(
                 'Authorization',
