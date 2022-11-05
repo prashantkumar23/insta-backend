@@ -31,18 +31,19 @@ export class LoginGraphqlResolver {
             const command = new LoginCommand(input)
             const response = await this.commandBus.execute(command)
             const cookieOptions = {
-                sameSite: "none",
+                SameSite: "none",
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.ExpiresIn, // 1 day
             }
+            console.log("Cookie Options", cookieOptions)
             context.res.cookie(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
             context.res.cookie(
                 'Idtoken',
                 response.AuthenticationResult.IdToken, cookieOptions);
-            console.log("response", response)
+            // console.log("response", response)
             return {message: "Login Successfull!", isSuccess: true}
         } catch (err) {
             console.log(err)
