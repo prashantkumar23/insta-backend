@@ -17,7 +17,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
-  app.enableCors({credentials: true, origin: "*"})
+  app.enableCors({credentials: true, origin: "http://localhost:3000"})
   app.use(cookieParser())
   app.use(express.json({limit: "5mb"}))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
