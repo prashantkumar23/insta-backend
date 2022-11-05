@@ -29,7 +29,7 @@ import { join } from 'path';
             persistedQueries: false,
             cors: {
               credential: true,
-              origin: "http://localhost:3000",
+              origin: "http://localhost:3000/",
             },
             context: ({req, res}) => ({req, res}),
           }),
