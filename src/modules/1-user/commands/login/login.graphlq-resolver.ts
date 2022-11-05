@@ -34,6 +34,7 @@ export class LoginGraphqlResolver {
                 sameSite: "none",
                 httpOnly: true,
                 secure: true,
+                path: "/"
             }
             context.res.cookie(
                 'Authorization',
