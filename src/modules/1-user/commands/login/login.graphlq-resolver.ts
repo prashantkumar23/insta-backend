@@ -34,7 +34,7 @@ export class LoginGraphqlResolver {
                 sameSite: "none",
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
-                maxAge: response.ExpiresIn, // 1 day
+                maxAge: response.AuthenticationResult.ExpiresIn, // 1 day
             }
             console.log("Cookie Options", cookieOptions)
             context.res.cookie(
