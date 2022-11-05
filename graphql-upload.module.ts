@@ -29,7 +29,8 @@ import { join } from 'path';
             persistedQueries: false,
             cors: {
               credential: true,
-              origin: "http://localhost:3000",
+              origin: true,
+              exposedHeaders: 'Set-Cookie, Access-Control-Request-Headers',
             },
             context: ({req, res}) => ({req, res}),
           }),
