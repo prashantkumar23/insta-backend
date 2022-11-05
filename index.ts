@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(
     AppModule,
   );
+  const PORT = process.env.PORT || 5000
   const options = new DocumentBuilder().build();
 
   const document = SwaggerModule.createDocument(app, options);
@@ -22,7 +23,7 @@ async function bootstrap() {
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
   // app.use(cors({credentials: true}))
   // app.use(helmet())
-  await app.listen(5000);
-  console.log(`App is running at http://localhost:${5000}/graphql`)
+  await app.listen(PORT);
+  console.log(`App is running at http://localhost:${PORT}/graphql`)
 }
 bootstrap();

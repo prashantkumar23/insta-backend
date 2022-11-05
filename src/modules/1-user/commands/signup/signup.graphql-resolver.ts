@@ -12,6 +12,11 @@ import { ISignUpResponse } from '../../interfaces/signup.reponse'
 export class SignUpGraphqlResolver {
     constructor(private readonly commandBus: CommandBus) { }
 
+    @Query(() => String) 
+    async helloWord() {
+        return "Hello World!"
+    }
+
     @Mutation(() => SignUpResponse)
     async signup(@Args('input') input: SignUpRequest): Promise<SignUpResponse> {
 
