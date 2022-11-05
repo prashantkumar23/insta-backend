@@ -35,12 +35,11 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.ExpiresIn, // 1 day
-                domain: "http://localhost:3000"
             }
-            context.res.cookie(
+            context.res.setHeader(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
-            context.res.cookie(
+            context.res.setHeader(
                 'Idtoken',
                 response.AuthenticationResult.IdToken, cookieOptions);
             console.log("response", response)
