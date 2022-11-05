@@ -37,6 +37,7 @@ export class LoginGraphqlResolver {
                 maxAge: response.AuthenticationResult.ExpiresIn, // 1 day
             }
             console.log("Cookie Options", cookieOptions)
+            res.setCookie("Test", "Test", cookieOptions)
             context.res.cookie(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
