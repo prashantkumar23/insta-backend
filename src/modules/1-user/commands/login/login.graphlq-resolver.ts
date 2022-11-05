@@ -35,7 +35,7 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.ExpiresIn, // 1 day
-                domain: "localhost"
+                domain: "http://localhost:3000"
             }
             context.res.cookie(
                 'Authorization',
