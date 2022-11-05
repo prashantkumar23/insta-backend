@@ -32,15 +32,13 @@ export class LoginGraphqlResolver {
             const response = await this.commandBus.execute(command)
             const cookieOptions = {
                 sameSite: "none",
-                httpOnly: true,
-                secure: true,
-                path: "/"
+                // httpOnly: true,
+                // secure: true,
+                // path: "/"
             }
             context.res.cookie(
                 'Authorization',
-                response.AuthenticationResult.AccessToken, {
-                    cookieOptions
-                });
+                response.AuthenticationResult.AccessToken, cookieOptions);
             context.res.cookie(
                 'Idtoken',
                 response.AuthenticationResult.IdToken, cookieOptions);
