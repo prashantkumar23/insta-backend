@@ -34,7 +34,7 @@ export class LoginGraphqlResolver {
                 sameSite: "none",
                 // httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 1000 * 60 * 60 * 24, // 1 day
+                maxAge: response.ExpiresIn, // 1 day
                 domain: undefined,
                 // path: "/"
             }

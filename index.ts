@@ -10,12 +10,16 @@ async function bootstrap() {
   const app = await NestFactory.create(
     AppModule,
   );
+  const appExpress = express()
   const PORT = process.env.PORT || 5000
   const options = new DocumentBuilder().build();
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
 
+  if (process.env.NODE_ENV === 'production') {
+    appExpress.set('trust proxy', 1); // trust first proxy
+  }
   // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
   app.enableCors({credentials: true, origin: "http://localhost:3000"})
   app.use(cookieParser())
