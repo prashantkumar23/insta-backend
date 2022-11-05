@@ -31,9 +31,10 @@ export class LoginGraphqlResolver {
             const command = new LoginCommand(input)
             const response = await this.commandBus.execute(command)
             const cookieOptions = {
-                sameSite: "none",
+                sameSite: "lax",
                 // httpOnly: true,
                 secure: true,
+
                 // path: "/"
             }
             context.res.cookie(
