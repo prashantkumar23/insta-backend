@@ -15,6 +15,7 @@
   "homepage": "https://github.com:prashantkumar23/blogBackend.git",
   "scripts": {
     "build": "rimraf dist && tsc && node ./dist/index.js",
+    "start:prod": "node dist/index.js",
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "prestart": "npm run build",
