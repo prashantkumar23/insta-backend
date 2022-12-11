@@ -13,7 +13,6 @@ async function bootstrap() {
   );
   const appExpress = express()
 
-
   const PORT = process.env.PORT || 5000
   const options = new DocumentBuilder().build();
 
@@ -25,7 +24,7 @@ async function bootstrap() {
     appExpress.set('trust proxy', 1); // trust first proxy
   }
   // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
-  app.enableCors({ credentials: true, origin: true })
+  app.enableCors({ credentials: true, origin: true, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS' })
   app.use(cookieParser())
   app.use(express.json({ limit: "5mb" }))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
