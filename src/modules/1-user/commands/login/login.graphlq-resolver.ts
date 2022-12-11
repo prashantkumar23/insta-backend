@@ -35,6 +35,7 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
+                path: "/graphql",
                 // domain: process.env.NODE_ENV === "production" ? "insta-frontend-gules.vercel.app" : "localhost"
             }
             // console.log("Cookie Options", cookieOptions)
@@ -49,7 +50,7 @@ export class LoginGraphqlResolver {
                 response.AuthenticationResult.IdToken, cookieOptions);
 
 
-
+            context.res.header("Set-Cookie", "mycookie=hello; Secure; HttpOnly; SameSite=None; Path=/; Max-Age=99999999;")
             context.res.header('Authorization',
                 response.AuthenticationResult.AccessToken)
 

@@ -16,15 +16,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("docs", app, document);
 
-  if (process.env.NODE_ENV === "production") {
-    appExpress.set("trust proxy", () => true); // trust first proxy
-  }
-  app.use(cookieParser());
+  appExpress.use(cookieParser());
   app.enableCors({ 
     credentials: true,
     origin: [/\.amplifyapp\.com$/, /\.vercel\.app$/],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    exposedHeaders: ["set-cookie"],
+    exposedHeaders: ["Set-Cookie"],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Access-Token', 'Authorization', "Idtoken", "Cookie"],
     preflightContinue: false
   });
