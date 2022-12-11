@@ -38,7 +38,7 @@ export class LoginGraphqlResolver {
       const response = await this.commandBus.execute(command);
       const cookieOptions = {
         sameSite: "Strict",
-        httpOnly: false,
+        httpOnly: true,
         // secure: process.env.NODE_ENV === "production" ? true : false,
         maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
         domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost"
