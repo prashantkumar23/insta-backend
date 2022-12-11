@@ -43,10 +43,10 @@ export class LoginGraphqlResolver {
 
             context.res.cookie(
                 'Authorization',
-                response.AuthenticationResult.AccessToken, cookieOptions);
+                response.AuthenticationResult.AccessToken);
             context.res.cookie(
                 'Idtoken',
-                response.AuthenticationResult.IdToken, cookieOptions);
+                response.AuthenticationResult.IdToken);
 
 
 
