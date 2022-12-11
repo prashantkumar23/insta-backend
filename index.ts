@@ -20,9 +20,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
 
-  // if (process.env.NODE_ENV === 'production') {
-  //   appExpress.set('trust proxy', 1); // trust first proxy
-  // }
+  if (process.env.NODE_ENV === 'production') {
+    appExpress.set('trust proxy', () => true); // trust first proxy
+  }
   app.use(cookieParser())
   // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
   app.enableCors({ credentials: true, origin: true, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS' })
