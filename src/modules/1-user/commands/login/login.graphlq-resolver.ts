@@ -50,12 +50,12 @@ export class LoginGraphqlResolver {
       context.res.cookie(
         "Authorization",
         response.AuthenticationResult.AccessToken,
-        cookieOptions
+        
       );
       context.res.cookie(
         "Idtoken",
         response.AuthenticationResult.IdToken,
-        cookieOptions
+        
       );
 
     //   context.res.header(
