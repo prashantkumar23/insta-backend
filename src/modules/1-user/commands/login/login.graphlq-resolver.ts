@@ -38,10 +38,10 @@ export class LoginGraphqlResolver {
       const response = await this.commandBus.execute(command);
       const cookieOptions = {
         sameSite: "Strict",
-        // httpOnly: true,
+        httpOnly: false,
         // secure: process.env.NODE_ENV === "production" ? true : false,
         maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
-        // domain: process.env.NODE_ENV === "production" ? "insta-frontend-gules.vercel.app" : "localhost"
+        domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost"
       };
       // console.log("Cookie Options", cookieOptions)
       // console.log("Cookie *******")
