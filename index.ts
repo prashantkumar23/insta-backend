@@ -16,6 +16,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("docs", app, document);
 
+  if(process.env.NODE_ENV === "production") {
+    console.log("Here")
+    appExpress.enable("trust proxy")
+    // appExpress.set("trust proxy", "loopback")
+  }
   appExpress.use(cookieParser());
   app.enableCors({ 
     credentials: true,
