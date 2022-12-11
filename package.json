@@ -22,7 +22,7 @@
     "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "dependencies": {
-    "typescript": "latest",
+    "typescript": "^4.9.4",
     "@aws-sdk/client-s3": "^3.142.0",
     "@nestjs/apollo": "^10.0.19",
     "@nestjs/common": "^9.0.5",
