@@ -25,7 +25,7 @@ import { join } from 'path';
         imports: [
           GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            autoSchemaFile: join(process.cwd(), 'src/infrastructure/schema.gql'),
+            autoSchemaFile: join(__dirname, 'src/infrastructure/schema.gql'),
             persistedQueries: false,
             cors: {
               credential: true,
