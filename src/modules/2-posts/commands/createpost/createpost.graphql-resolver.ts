@@ -44,12 +44,12 @@ export class CreatePostGraphqlResolver {
                 postUrl: "",
                 wasLikeByMe: false,
             }
-
+            console.log("Post Data nd Image Resp", postData, imageResp)
             const command = new CreatePostCommand(postData)
 
             const resp: any = await this.commandBus.execute(command)
 
-            console.log("resp", resp)
+            // console.log("resp", resp)
 
             await this.userFactory.updateNumberOfPostsAndIds(user.userDetails.username, resp._id)
 
