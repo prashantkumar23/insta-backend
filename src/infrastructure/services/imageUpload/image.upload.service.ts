@@ -7,8 +7,7 @@ import stream from "stream";
 
 import { S3Configuration } from "./s3.config";
 
-const path2 = process.cwd() + "\\uploads"
-console.log("Path 2", path2)
+const pathToImageUpload = process.cwd() + "\\uploads"
 
 export interface IS3ImageUploadResponse {
     ETag: string;
@@ -58,23 +57,23 @@ export class S3ImageUpload {
 
 
 
-                if (!fs.existsSync(path2)) {
-                    fs.mkdirSync(path2);
+                if (!fs.existsSync(pathToImageUpload)) {
+                    fs.mkdirSync(pathToImageUpload);
                 }
 
                 const uploadImage = (): Promise<any> => {
                     return new Promise(async (resolve, reject) => {
-                        createReadStream().pipe(createWriteStream(path2 + `/${filename}`))
+                        createReadStream().pipe(createWriteStream(pathToImageUpload + `/${filename}`))
                             .on("finish", async () => {
                                 // upload image to s3
-                                fs.createReadStream(path2 + `/${filename}`).pipe(writeStream)
+                                fs.createReadStream(pathToImageUpload + `/${filename}`).pipe(writeStream)
 
                                 await promise
                                     .then((data) => {
-                                        fs.unlinkSync(path2 + `/${filename}`)
+                                        fs.unlinkSync(pathToImageUpload + `/${filename}`)
                                         resolve(data);
                                     }).catch((err) => {
-                                        fs.unlinkSync(path2 + `/${filename}`)
+                                        fs.unlinkSync(pathToImageUpload + `/${filename}`)
                                         reject(err.message);
                                     });
 

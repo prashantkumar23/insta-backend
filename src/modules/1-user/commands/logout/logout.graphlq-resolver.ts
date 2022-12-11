@@ -31,14 +31,18 @@ export class LogoutGraphqlResolver {
                 })
             }
 
+            // console.log("Obj**********", obj)
+
             const accessToken = obj["Authorization"]
             const command = new LogoutCommand({ accessToken })
-            await this.commandBus.execute(command)
-            // console.log("Resp Logout", resp);
+            const res = await this.commandBus.execute(command)
+            // console.log("Resp Logout", res);
             context.res.clearCookie("Authorization")
             context.res.clearCookie("Idtoken")
             return { message: "Logout Successfull", isSuccess: true }
         } catch (err: any) {
+            context.res.clearCookie("Authorization")
+            context.res.clearCookie("Idtoken")
             return { message: "Something went wrong", isSuccess: false }
         }
     }
