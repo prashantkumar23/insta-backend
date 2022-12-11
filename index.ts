@@ -20,9 +20,9 @@ async function bootstrap() {
     appExpress.set("trust proxy", () => true); // trust first proxy
   }
   app.use(cookieParser());
-  app.enableCors({
+  app.enableCors({ 
     credentials: true,
-    origin: [/\.vercel\.app$/],
+    origin: [/\.amplifyapp\.com$/],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     exposedHeaders: ["set-cookie"],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Access-Token', 'Authorization', "Idtoken", "Cookie"],
