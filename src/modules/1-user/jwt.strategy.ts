@@ -7,7 +7,8 @@ import { CognitoConfiguration } from './cognito.config';
 import { User } from './user.type';
 
 const cookieExtractor = function (req) {
-  console.log("REq***********", req.cookie, req.cookies)
+  // console.log("REq***********", req.headers)
+  // console.log("REq***********", req.headers.cookie)
  
    // when request comes from ssr
   if(req.headers["accesstoken"] && req.headers["idtoken"]) {
@@ -21,14 +22,26 @@ const cookieExtractor = function (req) {
 
   // when request from other end points
   if (req.headers.cookie) {
-    const tk = req.headers.cookie.split(" ");
-    const tokens = {
-      "accessToken": tk[0].split("=")[1],
-      "idToken": tk[1].split("=")[1]
+    const tokensNew = req.headers.cookie.split("; ")
+    const obj = {}
+
+    tokensNew.map((ele: string) => {
+      const key = ele.split("=")[0]
+      const value = ele.split("=")[1]
+
+      obj[key] = value;
+    })
+
+    if(obj["Authorization"] && obj["Idtoken"]) {
+
+      const tokens = {
+        "accessToken": obj["Authorization"],
+        "idToken": obj["Idtoken"]
+      }
+
+      return tokens.idToken
     }
 
-    // console.log(req.headers.cookie, tokens)
-    return tokens.idToken
   }
   return null
 };
@@ -53,6 +66,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
   async validate(payload: JwtPayload) {
     const user: User = new User(payload["cognito:username"], payload.name, payload.email);
+    // console.log("User*************", user)
     return user;
   }
 }

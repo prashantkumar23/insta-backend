@@ -6,12 +6,10 @@ import { AuthGuard } from '@nestjs/passport';
 export class CongnitoAuthGuard extends AuthGuard('jwt') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
-    console.log("Cnotext", ctx.getContext().req)
     return ctx.getContext().req;
   }
 
   handleRequest<TUser = any>(err: any, user: any, info: any, context: ExecutionContext, status?: any): any {
-    console.log("INFO*****", user)
     if (!user) {
       return { userDetails: undefined, message: info }
     }

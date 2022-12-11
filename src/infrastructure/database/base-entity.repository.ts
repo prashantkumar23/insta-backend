@@ -147,7 +147,7 @@ export abstract class BaseEntityRepository<
         },
         updateFilterQuery
       )
-      console.log("res", res)
+      // console.log("res", res)
       return res
     } catch (err) {
       console.log("getUserDetail", err)
@@ -164,7 +164,7 @@ export abstract class BaseEntityRepository<
         },
         updateFilterQuery
       )
-      console.log("res", res)
+      // console.log("res", res)
       return res
     } catch (err) {
       console.log("getUserDetail", err)
@@ -229,7 +229,7 @@ export abstract class BaseEntityRepository<
         { postIds: 0, followersList: 0, email_verfied: 0, email: 0 },
         limit
       )
-      console.log("getUserRecommendation", res)
+      // console.log("getUserRecommendation", res)
       return res;
     } catch (err) {
       console.log("getUserRecommendation", err)
@@ -241,7 +241,7 @@ export abstract class BaseEntityRepository<
   async getUserPost(username: string) {
     try {
       const res = await this.getUserPostByUsername(username)
-      console.log("res", res)
+      // console.log("res", res)
       return res
     } catch (err) {
       console.log("getUserPost", err)
@@ -256,7 +256,7 @@ export abstract class BaseEntityRepository<
       const res = await this.getFeedPosts(userId, limit, skip)
       return res;
     } catch (err) {
-      console.log("getFeedPost", err)
+      // console.log("getFeedPost", err)
       return err
     }
   }

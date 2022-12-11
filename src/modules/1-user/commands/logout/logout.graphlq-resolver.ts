@@ -19,7 +19,19 @@ export class LogoutGraphqlResolver {
         @Context() context: any,
     ): Promise<LogoutResponse> {
         try {
-            const accessToken = context.req.cookies["Authorization"]
+            
+            const obj = {}
+            if (context.req.headers.cookie) {
+                const tokensNew = context.req.headers.cookie.split("; ")
+                tokensNew.map((ele: string) => {
+                    const key = ele.split("=")[0]
+                    const value = ele.split("=")[1]
+
+                    obj[key] = value;
+                })
+            }
+
+            const accessToken = obj["Authorization"]
             const command = new LogoutCommand({ accessToken })
             await this.commandBus.execute(command)
             // console.log("Resp Logout", resp);

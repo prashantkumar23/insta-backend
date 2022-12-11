@@ -25,10 +25,10 @@ async function bootstrap() {
   appExpress.use(cookieParser());
   app.enableCors({ 
     credentials: true,
-    origin: [/\.amplifyapp\.com$/, /\.vercel\.app$/, /\.railway\.app$/],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    exposedHeaders: ["Set-Cookie"],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Access-Token', 'Authorization', "Idtoken", "Cookie"],
+    origin: [/\.amplifyapp\.com$/, /\.vercel\.app$/, /\.railway\.app$/, "http://localhost:3000"],
+    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    // exposedHeaders: ["Set-Cookie"],
+    // allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Access-Token', 'Authorization', "Idtoken", "Cookie"],
   });
 
   app.use(express.json({ limit: "5mb" }));

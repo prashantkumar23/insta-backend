@@ -339,10 +339,10 @@ export abstract class EntityRepository<
         return newPost
       })
 
-      console.log("getFeedPost Res", posts)
+      // console.log("getFeedPost Res", posts)
       return { posts, count }
     } catch (err) {
-      console.log("getFeedPost", err)
+      // console.log("getFeedPost", err)
       return err
     }
   }

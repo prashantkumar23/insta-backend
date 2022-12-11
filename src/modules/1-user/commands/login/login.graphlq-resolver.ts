@@ -45,8 +45,8 @@ export class LoginGraphqlResolver {
       };
       // console.log("Cookie Options", cookieOptions)
       // console.log("Cookie *******")
-      // context.res.cookie("test", "test")
-
+      context.res.cookie("testOne", "test")
+      context.res.cookie("testTwo", "test")
       context.res.cookie(
         "Authorization",
         response.AuthenticationResult.AccessToken,
