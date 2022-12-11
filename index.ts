@@ -25,7 +25,7 @@ async function bootstrap() {
     origin: [/\.vercel\.app$/],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     exposedHeaders: ["set-cookie"],
-    allowedHeaders: ['Content-Type', 'Authorization', "Idtoken"],
+    allowedHeaders: ['Content-Type', 'Authorization', "Idtoken", "Cookie"],
   });
 
   app.use(express.json({ limit: "5mb" }));

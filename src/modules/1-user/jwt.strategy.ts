@@ -7,7 +7,7 @@ import { CognitoConfiguration } from './cognito.config';
 import { User } from './user.type';
 
 const cookieExtractor = function (req) {
-  // console.log("REq***********", req.headers)
+  console.log("REq***********", req.cookie, req.cookies)
  
    // when request comes from ssr
   if(req.headers["accesstoken"] && req.headers["idtoken"]) {
