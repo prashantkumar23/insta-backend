@@ -59,22 +59,22 @@ export class LoginGraphqlResolver {
         cookieOptions
       );
 
-      context.res.header(
-        "Set-Cookie",
-        "mycookie=hello; Secure; HttpOnly; SameSite=None; Path=/; Max-Age=99999999;"
-      );
-      context.res.header(
-        "Set-Cookie",
-        `Authorization=${response.AuthenticationResult.AccessToken}; Secure=${
-          process.env.NODE_ENV === "production" ? true : false
-        }; HttpOnly; SameSite=None; Path=/; Max-age=${response.AuthenticationResult.ExpiresIn * 1000}`
-      );
-      context.res.header(
-        "Set-Cookie",
-        `Idtoken=${response.AuthenticationResult.IdToken}; Secure=${
-          process.env.NODE_ENV === "production" ? true : false
-        }; HttpOnly; SameSite=None; Path=/; Max-age=${response.AuthenticationResult.ExpiresIn * 1000}`
-      );
+    //   context.res.header(
+    //     "Set-Cookie",
+    //     "mycookie=hello; Secure; HttpOnly; SameSite=None; Path=/; Max-Age=99999999;"
+    //   );
+    //   context.res.header(
+    //     "Set-Cookie",
+    //     `Authorization=${response.AuthenticationResult.AccessToken}; Secure=${
+    //       process.env.NODE_ENV === "production" ? true : false
+    //     }; HttpOnly; SameSite=None; Path=/; Max-age=${response.AuthenticationResult.ExpiresIn * 1000}`
+    //   );
+    //   context.res.header(
+    //     "Set-Cookie",
+    //     `Idtoken=${response.AuthenticationResult.IdToken}; Secure=${
+    //       process.env.NODE_ENV === "production" ? true : false
+    //     }; HttpOnly; SameSite=None; Path=/; Max-age=${response.AuthenticationResult.ExpiresIn * 1000}`
+    //   );
 
     //   context.res.header("Idtoken", response.AuthenticationResult.IdToken);
 
