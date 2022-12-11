@@ -5,6 +5,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 
 import { AppModule } from './app.module';
+import cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(
@@ -25,7 +26,7 @@ async function bootstrap() {
   app.use(cookieParser())
   app.use(express.json({limit: "5mb"}))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
-  // app.use(cors({credentials: true}))
+  app.use(cors())
   await app.listen(PORT);
   console.log(`App is running at http://localhost:${PORT}/graphql`)
 }
