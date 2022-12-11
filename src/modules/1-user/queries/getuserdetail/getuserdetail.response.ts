@@ -35,7 +35,7 @@ export class UserDetail implements IUserDetailReponseGraphQL {
 @ObjectType()
 export class GetUserDetailResponse implements IGetUserDetailResponseGraphQL {
 
-    @Field(() => UserDetail)
+    @Field(() => UserDetail, {nullable: true})
     user: UserDetail
 
     @Field()

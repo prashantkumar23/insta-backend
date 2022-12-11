@@ -15,20 +15,20 @@ export class SignUpRequest implements SignUp {
     @Field()
     readonly name: string;
 
-    @MaxLength(350)
+    @MaxLength(100)
     @MinLength(5)
     @IsEmail()
     @Field()
     readonly email: string;
 
-    @MaxLength(350)
+    @MaxLength(30)
     @MinLength(3)
     @Field()
     readonly username: string;
 
 
-    @MaxLength(30)
-    @MinLength(3)
+    @MaxLength(50)
+    @MinLength(8)
     @Field()
     readonly password: string;
 

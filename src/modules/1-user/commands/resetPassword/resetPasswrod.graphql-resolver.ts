@@ -1,8 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { CommandBus } from '@nestjs/cqrs'
 
-import { ConfirmCodeResponse } from '../../response/confirmcode,response.dto'
-import { IConfirmCodeResponse } from '../../interfaces/confirmcode.response'
+import { ResetPasswordResponse } from '../../response/resetPassword.response.dto'
 import { ResetPasswordRequest } from './resetPassword.request.dto'
 import { ResetPasswordCommand } from './resetPassword.command'
 
@@ -10,16 +9,15 @@ import { ResetPasswordCommand } from './resetPassword.command'
 export class ResetPasswordGraphqlResolver {
     constructor(private readonly commandBus: CommandBus) { }
 
-    //TODO
-    @Mutation(() => ConfirmCodeResponse)
-    async resetPassword(@Args('input') input: ResetPasswordRequest): Promise<any> {
+    @Mutation(() => ResetPasswordResponse)
+    async resetPassword(@Args('input') input: ResetPasswordRequest): Promise<ResetPasswordResponse> {
 
         const command = new ResetPasswordCommand(input)
 
-        const resp: any = await this.commandBus.execute(command)
+        const resp = await this.commandBus.execute(command)
 
-        console.log("Reset Password", resp)
+        if (resp) return { isSuccess: true, message: "Your Password is now reset. Please re-login again" }
 
-        return resp
+        return { isSuccess: false, message: "Something went wrong!" }
     }
 }

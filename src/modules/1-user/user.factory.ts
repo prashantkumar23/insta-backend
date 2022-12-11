@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { EntityFactory } from '../../infrastructure/database/entity.factory';
 
@@ -13,7 +13,7 @@ import mongoose from 'mongoose';
 // import { UserUpdatedEvent } from './events/user.updated.event';
 
 @Injectable()
-export class UserFactory implements EntityFactory<User> {   
+export class UserFactory implements EntityFactory<User> {
     constructor(
         private readonly userEntityRepository: UserEntityRepository,
     ) { }
@@ -54,12 +54,30 @@ export class UserFactory implements EntityFactory<User> {
 
     async update(
         username: string,
-        email_verfied: boolean    
+        email_verfied: boolean
     ): Promise<any> {
         const user = await this.userEntityRepository.findOneAndUpdateByUsername(username, email_verfied);
         console.log("User in update", user)
         // user.apply(new UserUpdatedEvent())
         return user;
+    }
+
+    async findUserWithUsernameOrEmail({ username, email }: { username: string, email: string }): Promise<boolean> {
+        const existingUser = await this.userEntityRepository.findOne({
+            $or: [
+                { "username": { $eq: username.trim() } },
+                { "email": { $eq: email.trim() } },
+            ]
+        })
+        if (existingUser) return true;
+        return false;
+    }
+
+    async findUserWithEmail({ email }: { email: string }): Promise<any> {
+        const existingUser = await this.userEntityRepository.findOne({ email })
+
+        if (existingUser) return existingUser
+        return null
     }
 
     async updateNumberOfPostsAndIds(
@@ -83,50 +101,50 @@ export class UserFactory implements EntityFactory<User> {
         const user = await this.userEntityRepository.unfollow(username, whoToUnfollow)
         return user;
     }
-    
+
     async removeFromFollowing(userId: string, whoToRemove: string): Promise<any> {
         const res = await this.userEntityRepository.removeFromFollowing(userId, whoToRemove)
         return res
     }
-    
+
     async search(searchTerm: string) {
         const searchResults = await this.userEntityRepository.search(searchTerm);
         return searchResults
     }
 
-    async getUserDetail(username: string, updateFilterQuery?: mongoose.UpdateQuery<UserSchema>): Promise<any> {
+    async getUserDetail(username: string, updateFilterQuery?: mongoose.UpdateQuery<UserSchema>, email?: string): Promise<any> {
         try {
-            const res = await this.userEntityRepository.getUserDetail(username, updateFilterQuery)
+            const res = await this.userEntityRepository.getUserDetail(email ? email : username, updateFilterQuery)
             return res
-        } catch(err) {
+        } catch (err) {
             return err
-        }      
+        }
     }
 
     async getOtherUserDetail(username: string, userId: string) {
         try {
             const res = await this.userEntityRepository.getOtherUserDetail(username, userId)
             return res
-        } catch(err) {
+        } catch (err) {
             return err
-        }  
+        }
     }
 
     async getUserPost(username: string) {
         try {
             const res = await this.userEntityRepository.getUserPost(username)
             return res
-        } catch(err) {
+        } catch (err) {
             return err
-        }  
+        }
     }
 
     async getUserRecommendation(limit: number, userId: string) {
         try {
             const res = await this.userEntityRepository.getUserRecommendation(limit, userId)
             return res
-        } catch(err) {
+        } catch (err) {
             return err
-        }  
+        }
     }
 }

@@ -16,4 +16,8 @@ export class GetOtherUserDetail implements GetOtherUserDetailRequest {
     @Field()
     @Length(50)
     userId: string;
+
+    // @Field()
+    // @Length(50)
+    // otheruserId: string;
 }

@@ -12,7 +12,7 @@ import { ISignUpResponse } from '../../interfaces/signup.reponse'
 export class SignUpGraphqlResolver {
     constructor(private readonly commandBus: CommandBus) { }
 
-    @Query(() => String) 
+    @Query(() => String)
     async helloWorld() {
         return "Hello World!"
     }
@@ -26,6 +26,6 @@ export class SignUpGraphqlResolver {
 
         console.log("ISignUpResponse", resp)
 
-        return new SignUpResponse(resp)
+        return resp
     }
 }

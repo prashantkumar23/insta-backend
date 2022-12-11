@@ -4,7 +4,7 @@ import { GlobalSignOutRequest } from "aws-sdk/clients/cognitoidentityserviceprov
 
 import { CognitoConfiguration } from "./cognito.config";
 import { ConfirmCodeRequest } from "./commands/confirmcode/confirmcode.request.dto";
-import { ForgotPasswordRequest } from "./commands/forgotPassword/forgotpassword.request.dto";
+import { SendCodeRequest } from "./commands/sendCode/sendCode.request.dto";
 import { LoginRequest } from "./commands/login/login.request.dto";
 import { ResetPasswordRequest } from "./commands/resetPassword/resetPassword.request.dto";
 import { SignUpRequest } from "./commands/signup/signup.request.dto";
@@ -41,7 +41,7 @@ export class AuthService {
 
 
 
-    public async signUpUser({ name, email, username, password }: SignUpRequest): Promise<ISignUpResponse> {
+    public async signUpUser({ name, email, username, password }: SignUpRequest): Promise<boolean> {
 
         let userAttr = [];
         userAttr.push({ Name: 'email', Value: email });
@@ -58,10 +58,11 @@ export class AuthService {
         try {
             const data: ISignUpResponse = await this.cognitoIdentity.signUp(params).promise()
             // console.log(" Data", data)
-            return data
+            if (data) return true;
+            return false;
         } catch (error) {
-            // console.log(error)
-            return error
+            console.log(error)
+            return false
         }
     }
 
@@ -121,7 +122,7 @@ export class AuthService {
     }
 
 
-    public async forgotPassword({ username }: ForgotPasswordRequest): Promise<any> {
+    public async sendCode({ username }: { username: string }): Promise<boolean> {
         const params = {
             ClientId: this.clientId, /* required */
             Username: username, /* required */
@@ -129,15 +130,15 @@ export class AuthService {
 
         try {
             const data = await this.cognitoIdentity.forgotPassword(params).promise();
-            console.log("forgotPassword Data", data);
-            return data
+            if (data) return true;
+            return false;
         } catch (error) {
-            console.log("forgotPassword Error", error);
-            return error;
+            console.log("sendCode Error", error);
+            return false;
         }
     }
 
-    public async resetPassword({ username, newPassword, code }: ResetPasswordRequest): Promise<any> {
+    public async resetPassword({ username, newPassword, code }: ResetPasswordRequest): Promise<boolean> {
         const params = {
             // ClientId: this._authConfig.getClientId(), /* required */
             ClientId: this.clientId,
@@ -148,11 +149,13 @@ export class AuthService {
 
         try {
             const data = await this.cognitoIdentity.confirmForgotPassword(params).promise();
+
+            if (Object.keys(data).length === 0) return true
             console.log("Reset Password", data);
-            return data;
+            return false;
         } catch (error) {
             console.log("Reset Password Error", error);
-            return error;
+            return false;
         }
     }
 }

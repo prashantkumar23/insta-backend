@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { CongnitoAuthGuard } from '../../auth.guard';
@@ -13,7 +14,7 @@ export class GetUserPostGraphqlResolver {
     private readonly queryBus: QueryBus,
   ) { }
 
-  // @(CongnitoAuthGuard)
+  @UseGuards(CongnitoAuthGuard)
   @Query(() => GetUserPostResponse)
   async getUserPost(
     @Args('input') input: GetUserPost,

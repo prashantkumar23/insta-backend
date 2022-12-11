@@ -13,11 +13,7 @@ export class ResetPasswordeHandler
         private readonly userFactory: UserFactory
     ) { }
 
-    async execute({ resetPasswordRequest }: ResetPasswordCommand): Promise<CognitoIdentityServiceProvider.Types.ChangePasswordResponse | AWSError> {
-        const resp = await this.auth.resetPassword(resetPasswordRequest)
-
-        console.log("Reset Password Resp", resp)
-
-        return resp
+    async execute({ resetPasswordRequest }: ResetPasswordCommand): Promise<boolean> {
+        return await this.auth.resetPassword(resetPasswordRequest)
     }
 }

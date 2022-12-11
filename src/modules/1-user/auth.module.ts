@@ -7,7 +7,7 @@ import { AuthService } from "./auth.service";
 import { CongnitoAuthGuard } from "./auth.guard";
 import { AuthCommandHandlers, UserCommandHandler } from "./commands";
 import { ConfirmCodeGraphqlResolver } from "./commands/confirmcode/confirmcode.graphlq-resolver";
-import { ForgotPasswordGraphqlResolver } from "./commands/forgotPassword/forgotPassword.graphql-resolver";
+import { SendCodeGraphqlResolver } from "./commands/sendCode/sendCode.graphql-resolver";
 import { LoginGraphqlResolver } from "./commands/login/login.graphlq-resolver";
 import { ResetPasswordGraphqlResolver } from "./commands/resetPassword/resetPasswrod.graphql-resolver";
 import { SignUpGraphqlResolver } from "./commands/signup/signup.graphql-resolver";
@@ -55,7 +55,7 @@ import { CognitoConfiguration } from "./cognito.config";
         ConfirmCodeGraphqlResolver,
         LoginGraphqlResolver,
         LogoutGraphqlResolver,
-        ForgotPasswordGraphqlResolver,
+        SendCodeGraphqlResolver,
         ResetPasswordGraphqlResolver,
 
         FollowGraphqlResolver,

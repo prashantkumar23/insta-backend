@@ -32,6 +32,7 @@ export interface GetUserDetailRequest {
 export interface GetOtherUserDetailRequest {
     readonly username: string;
     readonly userId: string;
+    // readonly otheruserId: string;
 }
 
 export interface GetUserPostRequest {

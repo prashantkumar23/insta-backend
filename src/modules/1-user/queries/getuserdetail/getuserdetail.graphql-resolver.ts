@@ -17,7 +17,7 @@ export class GetUserDetailGraphqlResolver {
   ) { }
 
   @UseGuards(CongnitoAuthGuard)
-  @Query(() => GetUserDetailResponse, {nullable: true})
+  @Query(() => GetUserDetailResponse)
   async getUserDetail(
     @CurrentUser() user: User
   ): Promise<GetUserDetailResponse> {

@@ -10,6 +10,7 @@ export class CongnitoAuthGuard extends AuthGuard('jwt') {
   }
 
   handleRequest<TUser = any>(err: any, user: any, info: any, context: ExecutionContext, status?: any): any {
+    console.log("INFO*****", user)
     if (!user) {
       return { userDetails: undefined, message: info }
     }

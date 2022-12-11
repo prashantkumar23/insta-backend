@@ -8,4 +8,7 @@ export class SearchResponse implements ISearchResponseGraphQL {
 
     @Field()
     isSuccess: boolean;
+
+    @Field()
+    searchResult: string;
 }

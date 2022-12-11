@@ -10,12 +10,17 @@ export class SignUpHandler implements ICommandHandler<SignUpCommand> {
     private readonly auth: AuthService,
     private readonly eventPublisher: EventPublisher,
     private readonly userFactory: UserFactory
-  ) {}
+  ) { }
 
   async execute({ signUpRequest }: SignUpCommand): Promise<ISignUpResponse> {
-    const user: ISignUpResponse = await this.auth.signUpUser(signUpRequest);
 
-    if (user && user.UserSub) {
+    // check from db that username and email is there
+    const existingUser = await this.userFactory.findUserWithUsernameOrEmail({ username: signUpRequest.username, email: signUpRequest.email })
+    if (existingUser) return { isSuccess: false, message: "User with same username or email is already exists" }
+
+    const user = await this.auth.signUpUser(signUpRequest);
+
+    if (user) {
       const { username, name, email } = signUpRequest;
       const email_verfied = false;
       const numberOfPosts = 0;
@@ -47,7 +52,6 @@ export class SignUpHandler implements ICommandHandler<SignUpCommand> {
       createdUser.commit();
     }
 
-    // console.log("USer", user)
-    return user;
+    return { message: "Code has been sent to your entered email. Please check to confirm your account", isSuccess: true }
   }
 }

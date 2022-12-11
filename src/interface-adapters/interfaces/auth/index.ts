@@ -15,8 +15,8 @@ export interface Login {
     readonly password: string;
 }
 
-export interface ForgotPassword {
-    readonly username: string;
+export interface SendCode {
+    readonly email: string;
 }
 
 export interface ResetPassword {
@@ -26,7 +26,7 @@ export interface ResetPassword {
 }
 
 export interface Logout {
-    readonly accessToken: string;
+    // readonly accessToken: string;
 }
 
 

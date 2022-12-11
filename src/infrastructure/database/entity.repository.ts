@@ -41,7 +41,8 @@ export abstract class EntityRepository<
     )
 
     if (!entityDocument) {
-      throw new NotFoundException('Entity was not found.');
+      // throw new NotFoundException('Entity was not found.');
+      return null
     }
 
     return this.entitySchemaFactory.createFromSchema(entityDocument);
@@ -158,13 +159,39 @@ export abstract class EntityRepository<
     return [updatedEntityDocumentOne, updatedEntityDocumentTwo]
   }
 
-  async searchFunc(entityFilterQuery: FilterQuery<TSchema>): Promise<TEntity[]> {
+  async searchFunc({ searchTerm }: { searchTerm: string }): Promise<TEntity[]> {
     return (
-      //@ts-ignore
-      await this.entityModel.find(entityFilterQuery, {}, { lean: true })
-    ).map(entityDocument =>
-      this.entitySchemaFactory.createFromSchema(entityDocument),
-    );
+
+      await this.entityModel.aggregate([
+        {
+          "$search": {
+            index: "username_index",
+            autocomplete: {
+              query: searchTerm,
+              path: "username",
+              fuzzy: {
+                maxEdits: 1
+              },
+              tokenOrder: "sequential"
+            }
+          }
+        },
+
+        {
+          "$project": {
+            _id: 1,
+            name: 1,
+            username: 1,
+            pic: 1
+          }
+        },
+
+        {
+          "$limit": 10
+        }
+      ])
+
+    )
   }
 
   async getSpecificPostById(postId: string): Promise<any> {
@@ -240,7 +267,14 @@ export abstract class EntityRepository<
   // TODO: Find a better way to query it
   async getFeedPosts(userId: string, limit: number, skip: number): Promise<any> {
     try {
-      let res = await this.entityModel.find({}, {
+
+      let findObj = {}
+
+      if (userId) {
+        findObj = { userId }
+      }
+
+      let res = await this.entityModel.find(findObj, {
         // likeIds: 0,
         commentIds: 0,
         updatedAt: 0,
@@ -253,7 +287,7 @@ export abstract class EntityRepository<
           username: 1,
           pic: 1
         }
-      }).exec()
+      }).sort({ "createdAt": -1 }).exec()
 
       let count = await this.entityModel.count({})
 

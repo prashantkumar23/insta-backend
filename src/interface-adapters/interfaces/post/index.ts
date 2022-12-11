@@ -36,6 +36,12 @@ export interface GetFeedPost {
     readonly skip: number;
 }
 
+export interface GetUserPost {
+    readonly username: string;
+    readonly limit: number;
+    readonly skip: number;
+}
+
 export interface GetSpecificPost {
     readonly postId: string;
     readonly userId: string;

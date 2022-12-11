@@ -1,4 +1,4 @@
-export interface IConfirmCodeResponse {
+export interface IResetPasswordResponse {
     message: string;
     isSuccess: boolean;
 }

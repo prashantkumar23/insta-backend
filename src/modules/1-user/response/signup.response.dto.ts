@@ -12,21 +12,11 @@ class CodeDeliveryDetails {
 
 }
 
-@ObjectType() 
+@ObjectType()
 export class SignUpResponse implements ISignUpResponse {
-
-    constructor(Resp: ISignUpResponse) {
-        this.UserConfirmed = Resp.UserConfirmed
-        this.CodeDeliveryDetails = Resp.CodeDeliveryDetails
-        this.UserSub = Resp.UserSub
-    }
-
-    @Field() 
-    readonly UserConfirmed: boolean;
-
-    @Field(() => CodeDeliveryDetails)
-    readonly CodeDeliveryDetails: CodeDeliveryDetails
+    @Field()
+    readonly isSuccess: boolean;
 
     @Field()
-    readonly UserSub: string;
+    readonly message: string
 }

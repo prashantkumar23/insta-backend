@@ -12,7 +12,7 @@ export class CreateCommentRequest implements CreateComment {
     readonly whoCommented: string;
 
     @Field()
-    @Length(500)
+    @Length(200)
     readonly comment: string
 
     @Field()

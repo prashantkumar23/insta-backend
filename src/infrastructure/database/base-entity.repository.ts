@@ -34,7 +34,7 @@ export abstract class BaseEntityRepository<
 
   async search(searchTerm: string): Promise<any> {
     try {
-      const res = await this.searchFunc({ username: searchTerm });
+      const res = await this.searchFunc({ searchTerm });
       return res
     } catch (err) {
       console.log("Search", err)
@@ -136,10 +136,32 @@ export abstract class BaseEntityRepository<
     }
   }
 
+  async checkUserExists(username: string, updateFilterQuery?: mongoose.UpdateQuery<TSchema>, email?: string): Promise<any> {
+    try {
+      const res = await this.findOne<UserSchema>(
+        {
+          $or: [
+            { "username": { $eq: username.trim() } },
+            { "email": { $eq: email.trim() } },
+          ]
+        },
+        updateFilterQuery
+      )
+      console.log("res", res)
+      return res
+    } catch (err) {
+      console.log("getUserDetail", err)
+      return err
+    }
+  }
+
+
   async getUserDetail(username: string, updateFilterQuery?: mongoose.UpdateQuery<TSchema>): Promise<any> {
     try {
       const res = await this.findOne<UserSchema>(
-        { username },
+        {
+          username
+        },
         updateFilterQuery
       )
       console.log("res", res)
@@ -151,18 +173,25 @@ export abstract class BaseEntityRepository<
   }
 
   // ********************** TODO: Find Better way to query it
-  async getOtherUserDetail(userIdOne: string, userIdTwo: string): Promise<any> {
+  async getOtherUserDetail(username: string, userId: string): Promise<any> {
     try {
+      console.log("Username am getting", username, userId)
+
       let res: any = await this.findOne(
-        { _id: new mongoose.Types.ObjectId(userIdOne) } as FilterQuery<TSchema>,
+        { username } as FilterQuery<TSchema>,
         { postIds: 0 }
       )
-      res = { ...res }
-      const found = res.followingList.find((ele) => ele.toString() === userIdTwo)
 
-      if (found) {
-        return { ...res, followedByMe: true }
-      }
+      if(!res) return {}
+      // res = { ...res }
+      // const found = res.followingList.find((ele) => ele.toString() === userId)
+
+      // if (found) {
+      //   return { ...res, followedByMe: true }
+      // }
+
+      console.log("Data***************", res)
+      // return { ...res, followedByMe: false }
       return res
     } catch (err) {
       console.log("getOtherUserDetail", err)
@@ -195,7 +224,7 @@ export abstract class BaseEntityRepository<
       const res = await this.find(
         {
           _id: { $ne: new ObjectId(userId) },
-          followersList: { $nin: new ObjectId(userId) }
+          // followersList: { $nin: new ObjectId(userId) }
         },
         { postIds: 0, followersList: 0, email_verfied: 0, email: 0 },
         limit

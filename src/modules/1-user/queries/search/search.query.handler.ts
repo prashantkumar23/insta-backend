@@ -11,9 +11,8 @@ export class SearchQueryHandler implements IQueryHandler<SearchQuery> {
     ) {
     }
 
-    async execute({searchRequest}: SearchQuery): Promise<Result<UserSchema[], Error>> {
-        const {searchTerm} = searchRequest
-        const posts = await this.userFactory.search(searchTerm);
-        return posts
+    async execute({ searchRequest }: SearchQuery): Promise<Result<UserSchema[], Error>> {
+        const { searchTerm } = searchRequest
+        return await this.userFactory.search(searchTerm);
     }
 }

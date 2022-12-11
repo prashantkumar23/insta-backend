@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { CongnitoAuthGuard } from '../../auth.guard';
@@ -13,15 +14,15 @@ export class GetOtherUserDetailGraphqlResolver {
     private readonly queryBus: QueryBus,
   ) { }
 
-  // @(CongnitoAuthGuard)
-  @Query(() => GetOtherUserDetailResponse)
+  @UseGuards(CongnitoAuthGuard)
+  @Query(() => GetOtherUserDetailResponse, {nullable: true})
   async getOtherUserDetail(
     @Args('input') input: GetOtherUserDetail,
   ): Promise<GetOtherUserDetailResponse> {
     const query = new GetOtherUserDetailQuery(input);
     const resp = await this.queryBus.execute(query)
 
-    return { message: "getOtherUserDetail", isSuccess: true }
+    return { message: "", isSuccess: true, user: resp }
     // return users.map(user => new UserResponse(user));
   }
 }

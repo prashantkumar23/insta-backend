@@ -4,6 +4,13 @@
 
 type ConfirmCodeResponse {
   message: String!
+  isSuccess: Boolean!
+}
+
+type SendCodeResponse {
+  message: String!
+  isSuccess: Boolean!
+  username: String!
 }
 
 type LoginResponse {
@@ -22,16 +29,14 @@ type User {
   message: String!
 }
 
-type CodeDeliveryDetails {
-  Destination: String!
-  DeliveryMedium: String!
-  AttributeName: String!
+type ResetPasswordResponse {
+  message: String!
+  isSuccess: Boolean!
 }
 
 type SignUpResponse {
-  UserConfirmed: Boolean!
-  CodeDeliveryDetails: CodeDeliveryDetails!
-  UserSub: String!
+  isSuccess: Boolean!
+  message: String!
 }
 
 type FollowResponse {
@@ -47,6 +52,7 @@ type UnfollowResponse {
 type SearchResponse {
   message: String!
   isSuccess: Boolean!
+  searchResult: String!
 }
 
 type LogoutResponse {
@@ -67,7 +73,7 @@ type UserDetail {
 }
 
 type GetUserDetailResponse {
-  user: UserDetail!
+  user: UserDetail
   message: String!
   isSuccess: Boolean!
 }
@@ -77,7 +83,20 @@ type GetUserPostResponse {
   isSuccess: Boolean!
 }
 
+type OtherUserDetail {
+  _id: String
+  name: String
+  username: String
+  pic: String
+  email: String
+  email_verified: Boolean
+  numberOfPosts: Float
+  numberOfFollowers: Float
+  numberOfFollowings: Float
+}
+
 type GetOtherUserDetailResponse {
+  user: OtherUserDetail
   message: String!
   isSuccess: Boolean!
 }
@@ -196,9 +215,9 @@ type Query {
   helloWorld: String!
   whoAmI: User
   search(input: Search!): SearchResponse!
-  getUserDetail: GetUserDetailResponse
+  getUserDetail: GetUserDetailResponse!
   getUserPost(input: GetUserPost!): GetUserPostResponse!
-  getOtherUserDetail(input: GetOtherUserDetail!): GetOtherUserDetailResponse!
+  getOtherUserDetail(input: GetOtherUserDetail!): GetOtherUserDetailResponse
   getUserRecommendation(input: GetUserRecommendation!): GetOtherUserRecommendationResponse!
   getFeedPost(input: GetFeedPostRequest!): GetFeedPostResponse!
   getSpecificPost(input: GetSpecificPostRequest!): GetSpecificPostResponse!
@@ -237,9 +256,9 @@ type Mutation {
   signup(input: SignUpRequest!): SignUpResponse!
   confirmCode(input: ConfirmCodeRequest!): ConfirmCodeResponse!
   login(input: LoginRequest!): LoginResponse!
-  logout(input: LogoutRequest!): LogoutResponse!
-  forgotPassword(input: ForgotPasswordRequest!): ConfirmCodeResponse!
-  resetPassword(input: ResetPasswordRequest!): ConfirmCodeResponse!
+  logout: LogoutResponse!
+  sendCode(input: SendCodeRequest!): SendCodeResponse!
+  resetPassword(input: ResetPasswordRequest!): ResetPasswordResponse!
   follow(input: FollowRequestDTO!): FollowResponse!
   unfollow(input: UnfollowRequestDTO!): UnfollowResponse!
   removeFromFollowing(input: RemoveFromFollowingRequestDto!): RemoveFromFollowingResponse!
@@ -268,12 +287,8 @@ input LoginRequest {
   password: String!
 }
 
-input LogoutRequest {
-  accessToken: String!
-}
-
-input ForgotPasswordRequest {
-  username: String!
+input SendCodeRequest {
+  email: String!
 }
 
 input ResetPasswordRequest {

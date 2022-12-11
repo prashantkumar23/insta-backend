@@ -35,3 +35,61 @@ Pending Points:
 Usefull links:
 
 https://stackoverflow.com/questions/14348516/cascade-style-delete-in-mongoose
+
+
+
+{
+  "mappings": {
+    "dynamic": false,
+    "fields" :{
+      "searchName": [
+        {
+          "foldDiacritics": false,
+          "maxGrams": 7,
+          "minGrams": 2,
+          "tokenization": "edgeGram",
+          "type": "autocomplete"
+        }
+      ],
+      "username": [
+        {
+          "foldDiacritics": false,
+          "maxGrams": 7,
+          "minGrams": 2,
+          "tokenization": "edgeGram",
+          "type": "autocomplete"
+        }
+      ],
+      "name": [
+        {
+          "foldDiacritics": false,
+          "maxGrams": 7,
+          "minGrams": 2,
+          "tokenization": "edgeGram",
+          "type": "autocomplete"
+        }
+      ]
+    }
+  }
+}
+
+
+{
+  "mappings": {
+    "dynamic": false,
+    "fields" :{
+      "username": [
+        {
+          "analyzer": "lucene.standard",
+          "type": "string"
+        }
+      ],
+      "name": [
+        {
+          "analyzer": "lucene.standard",
+          "type": "string"
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { ConfirmCodeHandler } from './confirmcode/confirmcode.handler';
 import { FollowHandler } from './follow/follow.handler';
-import { ForgotPasswordeHandler } from './forgotPassword/forgotPassword.handler';
+import { SendCodeHandler } from './sendCode/sendCode.handler';
 import { LoginHandler } from './login/login.handler';
 import { LogoutHandler } from './logout/logout.handler';
 import { RemoveFromFollowingHandler } from './removeFromFollowing/removefromfollowing.handler';
@@ -13,7 +13,7 @@ export const AuthCommandHandlers = [
     ConfirmCodeHandler,
     LoginHandler,
     LogoutHandler,
-    ForgotPasswordeHandler,
+    SendCodeHandler,
     ResetPasswordeHandler,
 ];
 
