@@ -35,7 +35,7 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
-                domain: process.env.NODE_ENV === "production" ? ".vercel.com": "*"
+                domain: process.env.NODE_ENV === "production" ? ".vercel.app": "*"
             }
             console.log("Cookie Options", cookieOptions)
             console.log("Cookie *******", context.res)
