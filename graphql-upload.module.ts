@@ -29,7 +29,7 @@ export class GraphQLWithUploadModule implements NestModule {
           autoSchemaFile: join(process.cwd(), 'src/infrastructure/schema.gql'),
           persistedQueries: false,
           context: ({ req, res }: { req: Request, res: Response }) => {
-            res.setHeader("Access-Control-Allow-Origins", "*")
+            res.setHeader("Access-Control-Allow-Origins", process.env.NODE_ENV === "production" ? "vercel.app" : "*")
             return { req, res };
           },
           cors: {
