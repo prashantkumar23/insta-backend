@@ -7,7 +7,8 @@ import stream from "stream";
 
 import { S3Configuration } from "./s3.config";
 
-const path2 = "C:/Projects/1-Insta Clone/main-backend/uploads"
+const path2 = process.cwd() + "\\uploads"
+console.log("Path 2", path2)
 
 export interface IS3ImageUploadResponse {
     ETag: string;
