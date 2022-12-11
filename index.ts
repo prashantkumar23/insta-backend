@@ -22,7 +22,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({ 
     credentials: true,
-    origin: [/\.amplifyapp\.com$/],
+    origin: [/\.amplifyapp\.com$/, /\.vercel\.app$/],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     exposedHeaders: ["set-cookie"],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'X-Access-Token', 'Authorization', "Idtoken", "Cookie"],
