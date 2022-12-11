@@ -19,6 +19,7 @@ async function bootstrap() {
   if(process.env.NODE_ENV === "production") {
     console.log("Here")
     appExpress.enable("trust proxy")
+    appExpress.set("trust proxy", true)
     // appExpress.set("trust proxy", "loopback")
   }
   appExpress.use(cookieParser());
