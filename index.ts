@@ -22,13 +22,10 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({
     credentials: true,
-    origin: true,
+    origin: [/\.vercel\.app$/],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     exposedHeaders: ["set-cookie"],
-    allowedHeaders: [
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept",
-    ],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
   app.use(express.json({ limit: "5mb" }));
