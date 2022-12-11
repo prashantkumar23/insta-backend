@@ -13,7 +13,7 @@ async function bootstrap() {
   );
   const appExpress = express()
 
-  app.enableCors({ credentials: true, origin: true , allowedHeaders: ["Access-Control-Allow-Origins", "*"] })
+  // app.enableCors({ credentials: true, origin: true , allowedHeaders: ["Access-Control-Allow-Origins", "*"] })
 
   const PORT = process.env.PORT || 5000
   const options = new DocumentBuilder().build();
