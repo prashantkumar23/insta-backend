@@ -24,7 +24,7 @@ export class LoginGraphqlResolver {
     async login(
         @Context() context: any,
         @Args('input') input: LoginRequest,
-        @Res({ passthrough: true }) res: any,
+        @Res({passthrough: true}) response: any
     ): Promise<LoginResponse> {
 
         try {
@@ -35,10 +35,10 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
-                domain: process.env.NODE_ENV === "production" ? ".vercel.app": "*"
+                domain: process.env.NODE_ENV === "production" ? "insta-frontend-gules.vercel.app": "*"
             }
             console.log("Cookie Options", cookieOptions)
-            console.log("Cookie *******", context.res)
+            console.log("Cookie *******", response)
             context.res.cookie(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
