@@ -6,6 +6,8 @@ import { AuthGuard } from '@nestjs/passport';
 export class CongnitoAuthGuard extends AuthGuard('jwt') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
+    const request = ctx.getContext().req;
+    request.res?.cookie('test_token', "test_value");
     return ctx.getContext().req;
   }
 
