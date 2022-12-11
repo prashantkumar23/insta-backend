@@ -1,4 +1,4 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Context, GqlExecutionContext, GraphQLExecutionContext, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CommandBus } from '@nestjs/cqrs'
 import { Res, UseGuards } from '@nestjs/common'
 
@@ -24,7 +24,7 @@ export class LoginGraphqlResolver {
     async login(
         @Context() context: any,
         @Args('input') input: LoginRequest,
-        @Res({passthrough: true}) response: any
+        @Res({ passthrough: true }) response: any
     ): Promise<LoginResponse> {
 
         try {
@@ -35,16 +35,28 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
-                domain: process.env.NODE_ENV === "production" ? "https://insta-frontend-gules.vercel.app": "localhost"
+                domain: process.env.NODE_ENV === "production" ? "https://insta-frontend-gules.vercel.app" : "localhost"
             }
-            console.log("Cookie Options", cookieOptions)
-            console.log("Cookie *******", response)
+            // console.log("Cookie Options", cookieOptions)
+            // console.log("Cookie *******")
+            // context.res.cookie("test", "test")
+
             context.res.cookie(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
             context.res.cookie(
                 'Idtoken',
                 response.AuthenticationResult.IdToken, cookieOptions);
+
+
+
+            context.res.header('Authorization',
+                response.AuthenticationResult.AccessToken)
+
+            context.res.header(
+                'Idtoken',
+                response.AuthenticationResult.IdToken);
+
             // console.log("response", response)
             return { message: "Login Successfull!", isSuccess: true }
         } catch (err) {
