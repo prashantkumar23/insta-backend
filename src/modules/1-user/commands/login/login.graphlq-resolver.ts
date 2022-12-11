@@ -37,9 +37,9 @@ export class LoginGraphqlResolver {
       const command = new LoginCommand(input);
       const response = await this.commandBus.execute(command);
       const cookieOptions = {
-        sameSite: "None",
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production" ? true : false,
+        sameSite: "Strict",
+        // httpOnly: true,
+        // secure: process.env.NODE_ENV === "production" ? true : false,
         maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
         // domain: process.env.NODE_ENV === "production" ? "insta-frontend-gules.vercel.app" : "localhost"
       };
@@ -50,12 +50,12 @@ export class LoginGraphqlResolver {
       context.res.cookie(
         "Authorization",
         response.AuthenticationResult.AccessToken,
-        
+        cookieOptions
       );
       context.res.cookie(
         "Idtoken",
         response.AuthenticationResult.IdToken,
-        
+        cookieOptions
       );
 
     //   context.res.header(
