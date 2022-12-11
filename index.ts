@@ -22,11 +22,11 @@ async function bootstrap() {
     appExpress.set('trust proxy', 1); // trust first proxy
   }
   // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
-  app.enableCors({ credentials: true, origin: true })
+  app.enableCors({ credentials: true, origin: "https://insta-frontend-gules.vercel.app", allowedHeaders: ["Access-Control-Allow-Origins", "*"] })
   app.use(cookieParser())
   app.use(express.json({ limit: "5mb" }))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
-  app.use(cors({ allowedHeaders: "Access-Control-Allow-Origins" }))
+  // app.use(cors({ allowedHeaders: "Access-Control-Allow-Origins" }))
   await app.listen(PORT);
   console.log(`App is running at http://localhost:${PORT}/graphql`)
 }
