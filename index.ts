@@ -5,7 +5,6 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 
 import { AppModule } from './app.module';
-import cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(
@@ -24,12 +23,10 @@ async function bootstrap() {
     appExpress.set('trust proxy', () => true); // trust first proxy
   }
   app.use(cookieParser())
-  // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
-  app.enableCors({ credentials: true, origin: true, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS' })
+  app.enableCors({ credentials: true, origin: true, methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', exposedHeaders: ["set-cookie"] })
 
   app.use(express.json({ limit: "5mb" }))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
-  // app.use(cors({ allowedHeaders: "Access-Control-Allow-Origins" }))
   await app.listen(PORT);
   const url = await app.getUrl();
   console.log(`App is running at ${url}`)
