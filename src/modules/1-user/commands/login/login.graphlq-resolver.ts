@@ -35,7 +35,7 @@ export class LoginGraphqlResolver {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
                 maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
-                domain: process.env.NODE_ENV === "production" ? "https://www.insta-backend-production.up.railway.app" : "localhost"
+                domain: process.env.NODE_ENV === "production" ? "https://insta-backend-production.up.railway.app/graphql" : "localhost"
             }
             // console.log("Cookie Options", cookieOptions)
             // console.log("Cookie *******")
