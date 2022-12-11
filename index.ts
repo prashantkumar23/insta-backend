@@ -26,7 +26,6 @@ async function bootstrap() {
   app.use(express.json({limit: "5mb"}))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
   // app.use(cors({credentials: true}))
-  // app.use(helmet())
   await app.listen(PORT);
   console.log(`App is running at http://localhost:${PORT}/graphql`)
 }

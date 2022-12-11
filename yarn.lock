@@ -2325,11 +2325,6 @@
     "http-errors" "^1.8.1"
     "object-path" "^0.11.8"
 
-"graphql-ws@^5.9.1":
-  "integrity" "sha512-mL/SWGBwIT9Meq0NlfS55yXXTOeWPMbK7bZBEZhFu46bcGk1coTx2Sdtzxdk+9yHWngD+Fk1PZDWaAutQa9tpw=="
-  "resolved" "https://registry.npmjs.org/graphql-ws/-/graphql-ws-5.9.1.tgz"
-  "version" "5.9.1"
-
 "graphql-ws@5.5.5":
   "integrity" "sha512-hvyIS71vs4Tu/yUYHPvGXsTgo0t3arU820+lT5VjZS2go0ewp2LqyCgxEN56CzOG7Iys52eRhHBiD1gGRdiQtw=="
   "resolved" "https://registry.npmjs.org/graphql-ws/-/graphql-ws-5.5.5.tgz"
@@ -2388,11 +2383,6 @@
   dependencies:
     "inherits" "^2.0.3"
     "minimalistic-assert" "^1.0.1"
-
-"helmet@^5.1.1":
-  "integrity" "sha512-/yX0oVZBggA9cLJh8aw3PPCfedBnbd7J2aowjzsaWwZh7/UFY0nccn/aHAggIgWUFfnykX8GKd3a1pSbrmlcVQ=="
-  "resolved" "https://registry.npmjs.org/helmet/-/helmet-5.1.1.tgz"
-  "version" "5.1.1"
 
 "hmac-drbg@^1.0.1":
   "integrity" "sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg=="
