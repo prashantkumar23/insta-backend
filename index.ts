@@ -11,8 +11,10 @@ async function bootstrap() {
   const app = await NestFactory.create(
     AppModule,
   );
-  app.enableCors({ credentials: true, origin: true , allowedHeaders: ["Access-Control-Allow-Origins", "*"] })
   const appExpress = express()
+
+  app.enableCors({ credentials: true, origin: true , allowedHeaders: ["Access-Control-Allow-Origins", "*"] })
+
   const PORT = process.env.PORT || 5000
   const options = new DocumentBuilder().build();
 
@@ -24,7 +26,7 @@ async function bootstrap() {
     appExpress.set('trust proxy', 1); // trust first proxy
   }
   // app.use(graphqlUploadExpress({ maxFileSize: 2 * 1000 * 1000 }));
-
+  appExpress.options("*", cors())
   app.use(cookieParser())
   app.use(express.json({ limit: "5mb" }))
   app.use(express.urlencoded({ extended: true, limit: "5mb" }))
