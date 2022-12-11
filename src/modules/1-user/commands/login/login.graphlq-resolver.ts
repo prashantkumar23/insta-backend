@@ -1,4 +1,4 @@
-import { Args, Context,  Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CommandBus } from '@nestjs/cqrs'
 import { Res, UseGuards } from '@nestjs/common'
 
@@ -34,10 +34,11 @@ export class LoginGraphqlResolver {
                 sameSite: "none",
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production' ? true : false,
-                maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day
+                maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
+                domain: process.env.NODE_ENV === "production" ? ".vercel.com": "*"
             }
             console.log("Cookie Options", cookieOptions)
-         
+            console.log("Cookie *******", context.res)
             context.res.cookie(
                 'Authorization',
                 response.AuthenticationResult.AccessToken, cookieOptions);
@@ -45,10 +46,10 @@ export class LoginGraphqlResolver {
                 'Idtoken',
                 response.AuthenticationResult.IdToken, cookieOptions);
             // console.log("response", response)
-            return {message: "Login Successfull!", isSuccess: true}
+            return { message: "Login Successfull!", isSuccess: true }
         } catch (err) {
             console.log(err)
-            return {message: err.message, isSuccess: false}
+            return { message: err.message, isSuccess: false }
         }
 
     }
