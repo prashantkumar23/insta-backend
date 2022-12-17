@@ -1,10 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { ObjectId } from 'mongodb';
 import mongoose, { FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { retry } from 'rxjs';
-import { UserDto } from '../../modules/1-user/database/user.dto';
 import { UserSchema } from '../../modules/1-user/database/user.schema';
-import { User } from '../../modules/1-user/user.type';
 import { EntityRepository } from './entity.repository';
 
 import { IdentifiableEntitySchema } from './identifiable-entity.schema';
@@ -219,16 +216,33 @@ export abstract class BaseEntityRepository<
 
   async getUserRecommendation(limit: number, userId: string): Promise<any> {
     try {
+      console.log("User Id", userId)
       const res = await this.find(
         {
           _id: { $ne: new ObjectId(userId) },
           // followersList: { $nin: new ObjectId(userId) }
         },
-        { postIds: 0, followersList: 0, email_verfied: 0, email: 0 },
+        { postIds: 0,followingList: 0, email_verfied: 0, email: 0 },
         limit
       )
-      // console.log("getUserRecommendation", res)
-      return res;
+
+      const users = res.map((user) => {
+        //@ts-ignore
+        if(user.followersList) {
+          //@ts-ignore
+            const found = user.followersList.find((ele) => ele.toString() === userId) ? true : false;
+            return {
+              ...user,
+              followedByMe: found
+            }  
+        }
+
+        return user;
+      })
+
+
+      // console.log("getUserRecommendation", users)
+      return users;
     } catch (err) {
       console.log("getUserRecommendation", err)
       return err
