@@ -11,8 +11,8 @@ export class GetSpecificPostQueryHandler implements IQueryHandler<GetSpecificPos
     }
 
     async execute({getSpecificPostRequest}: GetSpecificPostQuery): Promise<Result<any, Error>> {
-        const {postId} = getSpecificPostRequest
-        const post = await this.postFactory.getSpecificPost(postId);
+        const {postId, userId} = getSpecificPostRequest
+        const post = await this.postFactory.getSpecificPost(postId, userId);
         return post
     }
 }

@@ -1,21 +1,27 @@
-import { NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { AggregateRoot } from '@nestjs/cqrs';
-import { DeleteResult, BulkWriteOptions, AnyBulkWriteOperation, BulkWriteResult, ObjectId, FindCursor } from 'mongodb';
-import mongoose, {
+import {
+  NotFoundException,
+  UnprocessableEntityException,
+} from "@nestjs/common";
+import { AggregateRoot } from "@nestjs/cqrs";
+import {
+  DeleteResult,
+  BulkWriteOptions,
+  AnyBulkWriteOperation,
+  BulkWriteResult,
+  ObjectId,
+} from "mongodb";
+import {
   FilterQuery,
   HydratedDocument,
   LeanDocument,
   Model,
   UpdateQuery,
-  ProjectionType,
   MongooseBulkWriteOptions,
   QueryOptions,
-  Document,
-} from 'mongoose';
+} from "mongoose";
 
-
-import { EntitySchemaFactory } from './entity-schema.factory';
-import { IdentifiableEntitySchema } from './identifiable-entity.schema';
+import { EntitySchemaFactory } from "./entity-schema.factory";
+import { IdentifiableEntitySchema } from "./identifiable-entity.schema";
 
 export abstract class EntityRepository<
   TSchema extends IdentifiableEntitySchema,
@@ -26,23 +32,23 @@ export abstract class EntityRepository<
     protected readonly entitySchemaFactory: EntitySchemaFactory<
       TSchema,
       TEntity
-    >,
+    >
   ) { }
 
   async findOne<T>(
     entityFilterQuery: FilterQuery<TSchema>,
     updateFilterQuery?: UpdateQuery<TSchema> | null,
-    options?: QueryOptions<TSchema> | null,
+    options?: QueryOptions<TSchema> | null
   ): Promise<TEntity> {
     const entityDocument = await this.entityModel.findOne<TSchema>(
       entityFilterQuery,
       updateFilterQuery,
-      options ? options : { lean: true },
-    )
+      options ? options : { lean: true }
+    );
 
     if (!entityDocument) {
       // throw new NotFoundException('Entity was not found.');
-      return null
+      return null;
     }
 
     return this.entitySchemaFactory.createFromSchema(entityDocument);
@@ -55,34 +61,40 @@ export abstract class EntityRepository<
   ): Promise<TEntity[]> {
     return (
       //@ts-ignore
-      await this.entityModel.find(entityFilterQuery, options, { lean: true }).limit(limit)
-    ).map(entityDocument =>
-      this.entitySchemaFactory.createFromSchema(entityDocument),
+      (
+        await this.entityModel
+          .find(entityFilterQuery, options, { lean: true })
+          .limit(limit)
+      ).map((entityDocument) =>
+        this.entitySchemaFactory.createFromSchema(entityDocument)
+      )
     );
   }
 
   async create(entity: TEntity): Promise<any> {
-    return await new this.entityModel(this.entitySchemaFactory.create(entity)).save();
+    return await new this.entityModel(
+      this.entitySchemaFactory.create(entity)
+    ).save();
   }
 
   async findOneAndReplace(
     entityFilterQuery: FilterQuery<TSchema>,
-    entity: TEntity,
+    entity: TEntity
   ): Promise<void> {
     const updatedEntityDocument = await this.entityModel.findOneAndReplace(
       entityFilterQuery,
-      (this.entitySchemaFactory.create(
-        entity,
-      ) as unknown) as LeanDocument<TSchema>,
+      this.entitySchemaFactory.create(
+        entity
+      ) as unknown as LeanDocument<TSchema>,
       {
         new: true,
         useFindAndModify: false,
         lean: true,
-      },
+      }
     );
 
     if (!updatedEntityDocument) {
-      throw new NotFoundException('Unable to find the entity to replace.');
+      throw new NotFoundException("Unable to find the entity to replace.");
     }
   }
 
@@ -94,38 +106,45 @@ export abstract class EntityRepository<
       entityFilterQuery,
       updateFilterQuery,
       {
-        returnDocument: "after"
-      },
+        returnDocument: "after",
+      }
     );
 
-    console.log("updatedEntityDocument", updatedEntityDocument)
-
+    console.log("updatedEntityDocument", updatedEntityDocument);
 
     if (!updatedEntityDocument) {
-      throw new NotFoundException('Unable to find the entity to update.');
+      throw new NotFoundException("Unable to find the entity to update.");
     }
 
-
-    return updatedEntityDocument
+    return updatedEntityDocument;
   }
 
-  async delete(entityFilterQuery: FilterQuery<TSchema>): Promise<DeleteResult | UnprocessableEntityException> {
-    const deletedEntityDocument = await this.entityModel.deleteOne(entityFilterQuery)
+  async delete(
+    entityFilterQuery: FilterQuery<TSchema>
+  ): Promise<DeleteResult | UnprocessableEntityException> {
+    const deletedEntityDocument = await this.entityModel.deleteOne(
+      entityFilterQuery
+    );
 
-    console.log("Deleted Entity Document", deletedEntityDocument)
+    console.log("Deleted Entity Document", deletedEntityDocument);
 
     if (!deletedEntityDocument.acknowledged) {
-      throw new UnprocessableEntityException('Unable to find the entity to delete');
+      throw new UnprocessableEntityException(
+        "Unable to find the entity to delete"
+      );
     }
 
-    return deletedEntityDocument
+    return deletedEntityDocument;
   }
 
-  async bulkWrite(writes: Array<AnyBulkWriteOperation>, options?: BulkWriteOptions & MongooseBulkWriteOptions): Promise<BulkWriteResult | any> {
+  async bulkWrite(
+    writes: Array<AnyBulkWriteOperation>,
+    options?: BulkWriteOptions & MongooseBulkWriteOptions
+  ): Promise<BulkWriteResult | any> {
     // @ts-ignore
-    const updateManyEntityDocument = await this.entityModel.bulkWrite(writes, options)
-    console.log("updateManyEntityDocument", updateManyEntityDocument)
-    return updateManyEntityDocument
+    const updateManyEntityDocument = await this.entityModel.bulkWrite(writes,options);
+    console.log("updateManyEntityDocument", updateManyEntityDocument);
+    return updateManyEntityDocument;
   }
 
   async followandUnfollowUpdate(
@@ -138,66 +157,64 @@ export abstract class EntityRepository<
       entityFilterQuery1,
       updateFilterQuery1,
       {
-        returnDocument: "after"
-      },
+        returnDocument: "after",
+      }
     );
 
     const updatedEntityDocumentTwo = await this.entityModel.findOneAndUpdate(
       entityFilterQuery2,
       updateFilterQuery2,
       {
-        returnDocument: "after"
-      },
+        returnDocument: "after",
+      }
     );
 
-
-    console.log(updatedEntityDocumentOne, updatedEntityDocumentTwo)
+    console.log(updatedEntityDocumentOne, updatedEntityDocumentTwo);
     if (!updatedEntityDocumentOne || !updatedEntityDocumentTwo) {
-      throw new NotFoundException('Unable to find the entity to update.');
+      throw new NotFoundException("Unable to find the entity to update.");
     }
 
-    return [updatedEntityDocumentOne, updatedEntityDocumentTwo]
+    return [updatedEntityDocumentOne, updatedEntityDocumentTwo];
   }
 
   async searchFunc({ searchTerm }: { searchTerm: string }): Promise<TEntity[]> {
-    return (
-
-      await this.entityModel.aggregate([
-        {
-          "$search": {
-            index: "username_index",
-            autocomplete: {
-              query: searchTerm,
-              path: "username",
-              fuzzy: {
-                maxEdits: 1
-              },
-              tokenOrder: "sequential"
-            }
-          }
+    return await this.entityModel.aggregate([
+      {
+        $search: {
+          index: "username_index",
+          autocomplete: {
+            query: searchTerm,
+            path: "username",
+            fuzzy: {
+              maxEdits: 1,
+            },
+            tokenOrder: "sequential",
+          },
         },
+      },
 
-        {
-          "$project": {
-            _id: 1,
-            name: 1,
-            username: 1,
-            pic: 1
-          }
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          username: 1,
+          pic: 1,
         },
+      },
 
-        {
-          "$limit": 10
-        }
-      ])
-
-    )
+      {
+        $limit: 10,
+      },
+    ]);
   }
 
-  async getSpecificPostById(postId: string): Promise<any> {
+  async getSpecificPostById(postId: string, userId: string): Promise<any> {
     try {
-      const res = await this.entityModel
-        .findOne({ _id: new ObjectId(postId) }, { s3bucketObjectIds: 0, updatedAt: 0 })
+      let res = await this.entityModel
+        .findOne(
+          { _id: new ObjectId(postId) },
+          { s3bucketObjectIds: 0, updatedAt: 0 }
+        )
         .lean()
         .populate({
           path: "userId",
@@ -205,8 +222,8 @@ export abstract class EntityRepository<
             _id: 1,
             name: 1,
             username: 1,
-            pic: 1
-          }
+            pic: 1,
+          },
         })
         .populate({
           path: "commentIds",
@@ -214,7 +231,7 @@ export abstract class EntityRepository<
             postId: 0,
             updatedAt: 0,
             likes: 0,
-            wasLikeByMe: 0
+            wasLikeByMe: 0,
           },
           populate: {
             path: "whoCommented",
@@ -222,82 +239,131 @@ export abstract class EntityRepository<
               _id: 1,
               name: 1,
               username: 1,
-              pic: 1
-            }
-          }
-        }).exec()
+              pic: 1,
+            },
+          },
+        })
+        .exec();
 
-      /* 
-      let url = post.imageUrl!.split("/")
+      if (res) {
+        res = {
+          ...res,
+          //@ts-ignore
+          wasLikeByMe: res.likeIds.find((ele) => ele.toString() === userId)
+            ? true
+            : false,
+        };
+        return res;
+      }
 
-      url = url[url.length - 1]
-      
-      
-      */
-
-      console.log("getSpecificPost Res", res)
-      return res
+      return res;
     } catch (err) {
-      console.log("getSpecificPost", err)
-      return err
+      console.log("getSpecificPost", err);
+      return err;
     }
   }
 
-  async getUserPostByUsername(username: string): Promise<any> {
+  async getUserPostByUsername(
+    userId: string,
+    limit: number,
+    skip: number
+  ): Promise<any> {
     try {
-      const res = await this.entityModel
-        .findOne(
-          { username },
-          { _id: 0, name: 0, username: 0, username_pic: 0, imageUrl: 0, email: 0, email_verfied: 0, numberOfPosts: 0, numberOffollowers: 0, numberOffollowings: 0, followingList: 0, followersList: 0, followedByMe: 0, pic: 0, createdAt: 0, updatedAt: 0 }
+
+      // TODO: Implement count function
+
+      let res = await this.entityModel
+        .find(
+          { userId: new ObjectId(userId) },
+          {
+            userId: 0,
+            caption: 0,
+            likes: 0,
+            likeIds: 0,
+            postUrl: 0,
+            comments: 0,
+            commentIds: 0,
+            s3bucketObjectIds: 0,
+            wasLikeByMe: 0,
+            createdAt: 0,
+            updatedAt: 0,
+          },
+          { limit, skip }
+        )
+        .lean()
+        .sort({ createdAt: -1 })
+        .exec();
+
+      if (res) {
+        const updatedPosts = res.map((post) => {
+          //@ts-ignore
+          let url = post.imageUrl.split("/");
+          url = url[url.length - 1];
+
+          let updatedPost = {
+            _id: post._id.toString(),
+            imageUrl: "https://d7cbio25mx5nv.cloudfront.net/" + url,
+          };
+
+          return updatedPost
+        });
+
+        return updatedPosts
+      }
+
+      return [];
+    } catch (err) {
+      console.log("getUserPostByUsername", err);
+      return err;
+    }
+  }
+
+  // TODO: Find a better way to query it
+  async getFeedPosts(
+    userId: string,
+    limit: number,
+    skip: number
+  ): Promise<any> {
+    try {
+      let findObj = {};
+
+      if (userId) {
+        findObj = { userId };
+      }
+
+      let res = await this.entityModel
+        .find(
+          {},
+          {
+            // likeIds: 0,
+            commentIds: 0,
+            updatedAt: 0,
+            s3bucketObjectIds: 0,
+          },
+          { limit, skip }
         )
         .lean()
         .populate({
-          path: "postIds",
-        }).exec()
+          path: "userId",
+          select: {
+            _id: 1,
+            name: 1,
+            username: 1,
+            pic: 1,
+          },
+        })
+        .sort({ createdAt: -1 })
+        .lean()
+        .exec();
 
-      console.log("getUserPostByUsername Res", res)
-      return res
-    } catch (err) {
-      console.log("getUserPostByUsername", err)
-      return err
-    }
-  }
+      let count = await this.entityModel.count({});
 
-
-  // TODO: Find a better way to query it
-  async getFeedPosts(userId: string, limit: number, skip: number): Promise<any> {
-    try {
-
-      let findObj = {}
-
-      if (userId) {
-        findObj = { userId }
-      }
-
-      let res = await this.entityModel.find(findObj, {
-        // likeIds: 0,
-        commentIds: 0,
-        updatedAt: 0,
-        s3bucketObjectIds: 0,
-      }, { limit, skip }).lean().populate({
-        path: "userId",
-        select: {
-          _id: 1,
-          name: 1,
-          username: 1,
-          pic: 1
-        }
-      }).sort({ "createdAt": -1 }).exec()
-
-      let count = await this.entityModel.count({})
-
-
-      //@ts-ignore  
+      //@ts-ignore
       const posts = res.map((post) => {
-        //@ts-ignore   
-        let url = post.imageUrl!.split("/")
+        //@ts-ignore
+        let url = post.imageUrl!.split("/");
 
-        url = url[url.length - 1]
+        url = url[url.length - 1];
         let newPost = {
           id: post._id.toString(),
           user: {
@@ -308,7 +374,7 @@ export abstract class EntityRepository<
             //@ts-ignore
             username: post.userId.username,
             //@ts-ignore
-            pic: post.userId.pic
+            pic: post.userId.pic,
           },
           //@ts-ignore
           caption: post.caption,
@@ -325,28 +391,26 @@ export abstract class EntityRepository<
           //@ts-ignore
           imageUrl: "https://d7cbio25mx5nv.cloudfront.net/" + url,
           //@ts-ignore
-          wasLikeByMe: post.wasLikeByMe
-
-        }
+          wasLikeByMe: post.wasLikeByMe,
+        };
 
         // console.log("newPost.likeIds", newPost.likeIds)
 
         newPost = {
           ...newPost,
-          wasLikeByMe: newPost.likeIds.find((id) => id.toString() === userId) ? true : false
-        }
+          wasLikeByMe: newPost.likeIds.find((id) => id.toString() === userId)
+            ? true
+            : false,
+        };
 
-        return newPost
-      })
+        return newPost;
+      });
 
       // console.log("getFeedPost Res", posts)
-      return { posts, count }
+      return { posts, count };
     } catch (err) {
       // console.log("getFeedPost", err)
-      return err
+      return err;
     }
   }
-
 }
-
-

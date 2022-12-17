@@ -6,11 +6,13 @@ import { EntityFactory } from '../../infrastructure/database/entity.factory';
 import { Post } from './Post';
 import { PostEntityRepository } from './database/post.entity.repository';
 import { CommentSchema } from '../3-comments/database/comment.schema';
+import { UserEntityRepository } from '../1-user/database/user-entity.repository';
 
 @Injectable()
 export class PostFactory implements EntityFactory<Post> {
     constructor(
         private readonly postEntityRepository: PostEntityRepository,
+        private readonly userEntityRepository: UserEntityRepository,
     ) { }
 
     async create(
@@ -97,11 +99,21 @@ export class PostFactory implements EntityFactory<Post> {
         }
     }
 
-    async getSpecificPost(postId: string) {
+    async getSpecificPost(postId: string, userId: string) {
         try {
-            const res = await this.postEntityRepository.getSpecificPost(postId)
+            const res = await this.postEntityRepository.getSpecificPost(postId, userId)
             return res
         } catch(err) {
+            return err
+        }
+    }
+
+    async getUserPost(username: string, limit: number, skip: number) {
+        try {
+            const user = await this.userEntityRepository.findOne({username})
+            const res = await this.postEntityRepository.getUserPost(user.getId(), limit, skip)
+            return res
+        } catch (err) {
             return err
         }
     }

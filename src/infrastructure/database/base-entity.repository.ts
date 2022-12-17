@@ -238,17 +238,6 @@ export abstract class BaseEntityRepository<
     }
   }
 
-  async getUserPost(username: string) {
-    try {
-      const res = await this.getUserPostByUsername(username)
-      // console.log("res", res)
-      return res
-    } catch (err) {
-      console.log("getUserPost", err)
-      return err
-    }
-  }
-
   // *********************** POST **********************************
 
   async getFeedPost(userId: string, limit: number, skip: number): Promise<any> {
@@ -333,12 +322,22 @@ export abstract class BaseEntityRepository<
     }
   }
 
-  async getSpecificPost(postId: string) {
+  async getSpecificPost(postId: string, userId: string) {
     try {
-      const res = await this.getSpecificPostById(postId)
+      const res = await this.getSpecificPostById(postId, userId)
       return res
     } catch (err) {
       console.log("getSpecificPost", err)
+      return err
+    }
+  }
+
+  async getUserPost(userId: string, limit: number, skip: number) {
+    try {
+      const res = await this.getUserPostByUsername(userId, limit, skip)
+      return res
+    } catch (err) {
+      console.log("getUserPost", err)
       return err
     }
   }

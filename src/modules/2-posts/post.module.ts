@@ -17,6 +17,7 @@ import { GetFeedPostGraphqlResolver } from "./queries/getfeedpost/getfeedpost.gr
 import { PostQueryHandlers } from "./queries";
 import { GetSpecificPostGraphqlResolver } from "./queries/getspecificpost/getspecificpost.graphql-resolver";
 import { UserModule } from "../1-user/auth.module";
+import { UserFactory } from "../1-user/user.factory";
   
 @Module({
     imports: [
@@ -30,7 +31,6 @@ import { UserModule } from "../1-user/auth.module";
         forwardRef(() => UserModule)
     ],
     providers: [
-
         S3Configuration,
         S3ImageUpload,
 

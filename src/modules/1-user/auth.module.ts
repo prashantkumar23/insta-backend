@@ -1,4 +1,4 @@
-import {  Global, Injectable, Module } from "@nestjs/common";
+import {  forwardRef, Global, Injectable, Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
 import { MongooseModule, SchemaFactory } from "@nestjs/mongoose";
 
@@ -24,11 +24,12 @@ import { UserQueryHandlers } from "./queries";
 import { SearchGraphqlResolver } from "./queries/search/search.graphql-resolver";
 import { LogoutGraphqlResolver } from "./commands/logout/logout.graphlq-resolver";
 import { GetUserDetailGraphqlResolver } from "./queries/getuserdetail/getuserdetail.graphql-resolver";
-import { GetUserPostGraphqlResolver } from "./queries/getuserpost/getuserpost.graphql-resolver";
+import { GetUserPostGraphqlResolver } from "../2-posts/queries/getuserpost/getuserpost.graphql-resolver";
 import { GetOtherUserDetailGraphqlResolver } from "./queries/getotheruserdetail/getotheruserdetail.graphql-resolver";
 import { RemoveFromFollowingGraphqlResolver } from "./commands/removeFromFollowing/removefromfollowing.graphlq-resolver";
 import { GetUserRecommendationGraphqlResolver } from "./queries/getusersrecommendation/getusersrecommendation.graphql-resolver";
 import { CognitoConfiguration } from "./cognito.config";
+import { PostModule } from "../2-posts/post.module";
 
 @Global()
 @Module({
@@ -39,7 +40,8 @@ import { CognitoConfiguration } from "./cognito.config";
                 name: UserSchema.name,
                 schema: SchemaFactory.createForClass(UserSchema),
             },
-        ])
+        ]),
+        forwardRef(() => PostModule)
     ],
     providers: [
         JwtStrategy,
@@ -73,6 +75,6 @@ import { CognitoConfiguration } from "./cognito.config";
         UserSchemaFactory,
         UserFactory,
     ],
-    exports: [UserFactory]
+    exports: [UserFactory, UserEntityRepository],
 })
 export class UserModule { }

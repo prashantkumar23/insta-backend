@@ -130,15 +130,6 @@ export class UserFactory implements EntityFactory<User> {
         }
     }
 
-    async getUserPost(username: string) {
-        try {
-            const res = await this.userEntityRepository.getUserPost(username)
-            return res
-        } catch (err) {
-            return err
-        }
-    }
-
     async getUserRecommendation(limit: number, userId: string) {
         try {
             const res = await this.userEntityRepository.getUserRecommendation(limit, userId)

@@ -37,6 +37,8 @@ export interface GetOtherUserDetailRequest {
 
 export interface GetUserPostRequest {
     readonly username: string;
+    readonly limit: number;
+    readonly skip: number;
 }
 
 export interface RemoveFromFollowingRequest {

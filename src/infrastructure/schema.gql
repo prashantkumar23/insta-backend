@@ -78,9 +78,16 @@ type GetUserDetailResponse {
   isSuccess: Boolean!
 }
 
+type UserPost {
+  _id: String!
+  imageUrl: String!
+}
+
 type GetUserPostResponse {
   message: String!
   isSuccess: Boolean!
+  posts: [UserPost!]!
+  count: Float!
 }
 
 type OtherUserDetail {
@@ -229,6 +236,8 @@ input Search {
 
 input GetUserPost {
   username: String!
+  limit: Float!
+  skip: Float!
 }
 
 input GetOtherUserDetail {
