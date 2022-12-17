@@ -138,4 +138,13 @@ export class UserFactory implements EntityFactory<User> {
             return err
         }
     }
+
+    async updateProfileImage(userId: string, pic: string) {
+        try {
+            const res = await this.userEntityRepository.updateProfileImage(userId, pic)
+            return res
+        } catch (err) {
+            return err
+        }
+    }
 }

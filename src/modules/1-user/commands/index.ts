@@ -7,6 +7,7 @@ import { RemoveFromFollowingHandler } from './removeFromFollowing/removefromfoll
 import { ResetPasswordeHandler } from './resetPassword/resetPassword.handler';
 import { SignUpHandler } from './signup/signup.handler';
 import { UnfollowHandler } from './unfollow/unfollow.handler';
+import { UpdateProfileImageHandler } from './updateProfileImage/updateprofileimage.handler';
 
 export const AuthCommandHandlers = [
     SignUpHandler,
@@ -20,5 +21,6 @@ export const AuthCommandHandlers = [
 export const UserCommandHandler = [
     FollowHandler,
     UnfollowHandler,
-    RemoveFromFollowingHandler
+    RemoveFromFollowingHandler,
+    UpdateProfileImageHandler
 ]

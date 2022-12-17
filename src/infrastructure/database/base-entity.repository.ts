@@ -175,14 +175,13 @@ export abstract class BaseEntityRepository<
   // ********************** TODO: Find Better way to query it
   async getOtherUserDetail(username: string, userId: string): Promise<any> {
     try {
-      console.log("Username am getting", username, userId)
 
       let res: any = await this.findOne(
         { username } as FilterQuery<TSchema>,
         { postIds: 0 }
       )
 
-      if(!res) return {}
+      if (!res) return {}
       // res = { ...res }
       // const found = res.followingList.find((ele) => ele.toString() === userId)
 
@@ -190,7 +189,6 @@ export abstract class BaseEntityRepository<
       //   return { ...res, followedByMe: true }
       // }
 
-      console.log("Data***************", res)
       // return { ...res, followedByMe: false }
       return res
     } catch (err) {
@@ -233,6 +231,17 @@ export abstract class BaseEntityRepository<
       return res;
     } catch (err) {
       console.log("getUserRecommendation", err)
+      return err
+        ;
+    }
+  }
+
+
+  async updateProfileImage(userId: string, pic: string): Promise<any> {
+    try {
+      const res = await this.findOneAndUpdate({ _id: new ObjectId(userId) }, { "$set": { pic: pic } })
+      return res;
+    } catch (err) {
       return err
         ;
     }

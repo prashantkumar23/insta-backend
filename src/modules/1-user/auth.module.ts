@@ -30,6 +30,9 @@ import { RemoveFromFollowingGraphqlResolver } from "./commands/removeFromFollowi
 import { GetUserRecommendationGraphqlResolver } from "./queries/getusersrecommendation/getusersrecommendation.graphql-resolver";
 import { CognitoConfiguration } from "./cognito.config";
 import { PostModule } from "../2-posts/post.module";
+import { UpdatePorfileImageGraphqlResolver } from "./commands/updateProfileImage/updateprofileimage.graphql-resolver";
+import { S3ImageUpload } from "../../infrastructure/services/imageUpload/image.upload.service";
+import { S3Configuration } from "../../infrastructure/services/imageUpload/s3.config";
 
 @Global()
 @Module({
@@ -44,6 +47,9 @@ import { PostModule } from "../2-posts/post.module";
         forwardRef(() => PostModule)
     ],
     providers: [
+        S3Configuration,
+        S3ImageUpload,
+        
         JwtStrategy,
         CongnitoAuthGuard,
         CognitoConfiguration,
@@ -69,6 +75,7 @@ import { PostModule } from "../2-posts/post.module";
         GetUserPostGraphqlResolver,
         GetOtherUserDetailGraphqlResolver,
         GetUserRecommendationGraphqlResolver,
+        UpdatePorfileImageGraphqlResolver,
 
         UserEntityRepository,
         UserDtoRepository,

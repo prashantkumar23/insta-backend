@@ -1,3 +1,5 @@
+import { Upload } from "graphql-upload";
+
 export interface IUser {
     readonly _id: string;
     readonly name: string;
@@ -48,5 +50,17 @@ export interface RemoveFromFollowingRequest {
 
 export interface GetUserRecommendationRequest {
     readonly limit: number
+    readonly userId: string;
+}
+
+export interface UpdateProfileImage {
+    readonly username: string;
+    readonly userId: string;
+    readonly file: Upload;
+}
+
+
+export interface UpdateProfileImageToMongo {
+    readonly pic: string;
     readonly userId: string;
 }
