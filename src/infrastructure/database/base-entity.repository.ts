@@ -161,6 +161,8 @@ export abstract class BaseEntityRepository<
         },
         updateFilterQuery
       )
+
+
       // console.log("res", res)
       return res
     } catch (err) {
@@ -178,16 +180,12 @@ export abstract class BaseEntityRepository<
         { postIds: 0 }
       )
 
+
       if (!res) return {}
-      // res = { ...res }
-      // const found = res.followingList.find((ele) => ele.toString() === userId)
 
-      // if (found) {
-      //   return { ...res, followedByMe: true }
-      // }
-
-      // return { ...res, followedByMe: false }
-      return res
+      res = { ...res, followedByMe: res.followersList.find((ele) => ele.toString() === userId) ? true : false }
+      console.log("Res***********", res)
+      return res;
     } catch (err) {
       console.log("getOtherUserDetail", err)
       return err
@@ -222,19 +220,19 @@ export abstract class BaseEntityRepository<
           _id: { $ne: new ObjectId(userId) },
           // followersList: { $nin: new ObjectId(userId) }
         },
-        { postIds: 0,followingList: 0, email_verfied: 0, email: 0 },
+        { postIds: 0, followingList: 0, email_verfied: 0, email: 0 },
         limit
       )
 
       const users = res.map((user) => {
         //@ts-ignore
-        if(user.followersList) {
+        if (user.followersList) {
           //@ts-ignore
-            const found = user.followersList.find((ele) => ele.toString() === userId) ? true : false;
-            return {
-              ...user,
-              followedByMe: found
-            }  
+          const found = user.followersList.find((ele) => ele.toString() === userId) ? true : false;
+          return {
+            ...user,
+            followedByMe: found
+          }
         }
 
         return user;

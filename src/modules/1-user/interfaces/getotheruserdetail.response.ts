@@ -6,8 +6,9 @@ export interface IOtherUserDetailReponseGraphQL {
     pic: string;
     username: string;
     numberOfPosts: number;
-    numberOfFollowings: number;
-    numberOfFollowers: number;
+    numberOffollowings: number;
+    numberOffollowers: number;
+    followedByMe: boolean
 }
 
 export interface IGetOtherUserDetailResponseGraphQL {

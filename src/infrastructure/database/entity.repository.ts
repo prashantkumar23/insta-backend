@@ -46,6 +46,7 @@ export abstract class EntityRepository<
       options ? options : { lean: true }
     );
 
+    // console.log("entityDocument", entityDocument)
     if (!entityDocument) {
       // throw new NotFoundException('Entity was not found.');
       return null;

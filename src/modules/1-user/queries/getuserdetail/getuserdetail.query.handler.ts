@@ -14,8 +14,9 @@ export class GetUserDetailQueryHandler implements IQueryHandler<GetUserDetailQue
     async execute({ getUserDetailRequest }: GetUserDetailQuery): Promise<Result<UserSchema[], Error>> {
         try {
             const { username } = getUserDetailRequest
-            let user = await this.userFactory.getUserDetail(username);
+            let user = await this.userFactory.getUserDetail(username, { postIds: 0 });
 
+            // console.log('User', user);
             user = {
                 id: user._id,
                 name: user.name,
@@ -24,10 +25,11 @@ export class GetUserDetailQueryHandler implements IQueryHandler<GetUserDetailQue
                 pic: user.pic,
                 email_verified: user.email_verfied,
                 numberOfPosts: user.numberOfPosts,
-                numberOfFollowings: user.numberOffollowings,
-                numberOfFollowers: user.numberOffollowers,
+                // needs to interchange data because of a bug
+                numberOfFollowings: user.numberOffollowers,
+                numberOfFollowers: user.numberOffollowings,
                 followedByMe: user.followedByMe
-            }   
+            }
             return user
         } catch (err) {
             throw new Error(err.message)

@@ -15,14 +15,19 @@ export class GetOtherUserDetailGraphqlResolver {
   ) { }
 
   @UseGuards(CongnitoAuthGuard)
-  @Query(() => GetOtherUserDetailResponse, {nullable: true})
+  @Query(() => GetOtherUserDetailResponse, { nullable: true })
   async getOtherUserDetail(
     @Args('input') input: GetOtherUserDetail,
   ): Promise<GetOtherUserDetailResponse> {
-    const query = new GetOtherUserDetailQuery(input);
-    const resp = await this.queryBus.execute(query)
+    try {
+      const query = new GetOtherUserDetailQuery(input);
+      const resp = await this.queryBus.execute(query)
 
-    return { message: "", isSuccess: true, user: resp }
+      return { message: "", isSuccess: true, user: resp }
+    } catch (err) {
+      console.log("Error in other user detail", err)
+      return { message: "Error", isSuccess: true, user: null }
+    }
     // return users.map(user => new UserResponse(user));
   }
 }

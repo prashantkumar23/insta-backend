@@ -1,5 +1,5 @@
 import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
-import { Ok, Result } from 'oxide.ts/dist';
+import { Result } from 'oxide.ts/dist';
 import { UserSchema } from '../../database/user.schema';
 import { UserFactory } from '../../user.factory';
 import { GetOtherUserDetailQuery } from './getotheruserdetail.query';
@@ -14,7 +14,22 @@ export class GetOtherUserDetailQueryHandler implements IQueryHandler<GetOtherUse
     async execute({ getOtherUserDetailRequest }: GetOtherUserDetailQuery): Promise<Result<UserSchema[], Error>> {
         try {
             const { username, userId } = getOtherUserDetailRequest
-            const user = await this.userFactory.getOtherUserDetail(username, userId);
+            let user = await this.userFactory.getOtherUserDetail(username, userId);
+            
+            user = {
+                id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+                pic: user.pic,
+                email_verified: user.email_verfied,
+                numberOfPosts: user.numberOfPosts,
+                // needs to interchange data because of a bug
+                numberOffollowings: user.numberOffollowers,
+                numberOffollowers: user.numberOffollowings,
+                followedByMe: user.followedByMe
+            }
+
             return user
         } catch (err) {
             console.log(err)

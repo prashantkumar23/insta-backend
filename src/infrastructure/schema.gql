@@ -98,8 +98,9 @@ type OtherUserDetail {
   email: String
   email_verified: Boolean
   numberOfPosts: Float
-  numberOfFollowers: Float
-  numberOfFollowings: Float
+  numberOffollowers: Float
+  numberOffollowings: Float
+  followedByMe: Boolean
 }
 
 type GetOtherUserDetailResponse {

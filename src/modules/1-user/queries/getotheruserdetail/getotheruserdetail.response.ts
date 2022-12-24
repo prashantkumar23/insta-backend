@@ -25,10 +25,13 @@ export class OtherUserDetail implements IOtherUserDetailReponseGraphQL {
     numberOfPosts: number;
 
     @Field({nullable: true})
-    numberOfFollowers: number;
+    numberOffollowers: number;
 
     @Field({nullable: true})
-    numberOfFollowings: number
+    numberOffollowings: number
+
+    @Field({nullable: true})
+    followedByMe: boolean
 }
 
 @ObjectType()
