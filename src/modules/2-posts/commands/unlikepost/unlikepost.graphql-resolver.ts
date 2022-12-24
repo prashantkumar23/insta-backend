@@ -26,7 +26,6 @@ export class UnikePostGraphqlResolver {
 
             const resp: any = await this.commandBus.execute(command)
 
-            console.log("resp", resp)
 
             return { isSuccess: true }
         } catch (err) {

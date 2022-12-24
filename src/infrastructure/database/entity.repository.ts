@@ -111,7 +111,6 @@ export abstract class EntityRepository<
       }
     );
 
-    console.log("updatedEntityDocument", updatedEntityDocument);
 
     if (!updatedEntityDocument) {
       throw new NotFoundException("Unable to find the entity to update.");
@@ -127,7 +126,6 @@ export abstract class EntityRepository<
       entityFilterQuery
     );
 
-    console.log("Deleted Entity Document", deletedEntityDocument);
 
     if (!deletedEntityDocument.acknowledged) {
       throw new UnprocessableEntityException(
@@ -144,7 +142,6 @@ export abstract class EntityRepository<
   ): Promise<BulkWriteResult | any> {
     // @ts-ignore
     const updateManyEntityDocument = await this.entityModel.bulkWrite(writes,options);
-    console.log("updateManyEntityDocument", updateManyEntityDocument);
     return updateManyEntityDocument;
   }
 
@@ -170,7 +167,6 @@ export abstract class EntityRepository<
       }
     );
 
-    console.log(updatedEntityDocumentOne, updatedEntityDocumentTwo);
     if (!updatedEntityDocumentOne || !updatedEntityDocumentTwo) {
       throw new NotFoundException("Unable to find the entity to update.");
     }

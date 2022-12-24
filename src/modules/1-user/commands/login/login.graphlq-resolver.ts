@@ -43,10 +43,7 @@ export class LoginGraphqlResolver {
         maxAge: response.AuthenticationResult.ExpiresIn * 1000, // 1 day,
         domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost"
       };
-      // console.log("Cookie Options", cookieOptions)
-      // console.log("Cookie *******")
-      context.res.cookie("testOne", "test")
-      context.res.cookie("testTwo", "test")
+  
       context.res.cookie(
         "Authorization",
         response.AuthenticationResult.AccessToken,
@@ -86,22 +83,3 @@ export class LoginGraphqlResolver {
   }
 }
 
-/* 
-
-
-                    // context.res.header['x-auth-token'] = '134646'
-        // console.log(context.res["x-auth-token"])
-        // console.log("Response",)
-
-        // res.cookies("Authorization", new LoginResponse(resp).AuthenticationResult.IdToken)
-        // context.res.cookie("Authorization", "Smaple", {maxAge: 900000, httpOnly: true})
-        // console.log("REsp", resp);
-        // context.res.header('Authorization', new LoginResponse(resp).AuthenticationResult.IdToken);
-        // console.log("Ctx resp",context.res)
-        // const ctx = GqlExecutionContext.create(this.context);
-        // const response = ctx.getContext().response
-        // response.setCookie("token", new LoginResponse(resp).AuthenticationResult.IdToken)
-        // res.set("authToken", new LoginResponse(resp).AuthenticationResult.IdToken)
-        // res.setHeader("authtoken", new LoginResponse(resp).AuthenticationResult.IdToken)
-
-*/

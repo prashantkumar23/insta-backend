@@ -17,7 +17,7 @@ export class GetOtherUserDetailQueryHandler implements IQueryHandler<GetOtherUse
             let user = await this.userFactory.getOtherUserDetail(username, userId);
             
             user = {
-                id: user._id,
+                _id: user._id,
                 name: user.name,
                 username: user.username,
                 email: user.email,

@@ -22,7 +22,6 @@ export class ConfirmCodeGraphqlResolver {
 
         const resp: IConfirmCodeResponse = await this.commandBus.execute(command)
 
-        console.log("IConfirmCodeResponse", resp)
 
         return { message: resp.toString(), isSuccess: true }
     }

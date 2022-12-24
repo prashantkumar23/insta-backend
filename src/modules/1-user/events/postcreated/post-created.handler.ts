@@ -12,7 +12,7 @@ export class PostCreatedHandler implements IEventHandler<PostCreatedEvent> {
     this.eventPublisher.mergeObjectContext(
       await this.userFactory.updateNumberOfPostsAndIds(username, postId)
     )
-    console.log('Post Created Event:', username, postId);
+    // console.log('Post Created Event:', username, postId);
     // console.log("POST creatd event in user", resp)
     // return resp
   }

@@ -15,8 +15,6 @@ export class FollowHandler
     const resp = await this.userFactory.follow(username, whoToFollow)
     // const { username } = confirmCodeRequest
 
-    console.log("excute follow", resp)
-
     // this.eventPublisher.mergeObjectContext(
     //   await this.userFactory.update(username, true)
     // )

@@ -14,7 +14,6 @@ export class UserDtoRepository {
   async findAll(): Promise<UserDto[]> {
     const users = await this.userModel.find({}, {}, { lean: true });
     
-    console.log("users", users)
     return users
     // return campers.map(camper => {
     //   // const allergiesLower = camper.allergies.map(allergy =>

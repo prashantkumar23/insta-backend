@@ -125,7 +125,7 @@ export abstract class BaseEntityRepository<
         { _id: new ObjectId(whoToRemove) },
         { $pull: { followingList: userId }, $inc: { numberOffollowers: -1 } }
       )
-      console.log("rrremoveFromFollowing Res", res)
+      // console.log("rrremoveFromFollowing Res", res)
       return res
     } catch (err) {
       console.log("removeFromFollowing", err)
@@ -184,7 +184,7 @@ export abstract class BaseEntityRepository<
       if (!res) return {}
 
       res = { ...res, followedByMe: res.followersList.find((ele) => ele.toString() === userId) ? true : false }
-      console.log("Res***********", res)
+      // console.log("Res***********", res)
       return res;
     } catch (err) {
       console.log("getOtherUserDetail", err)
@@ -214,7 +214,6 @@ export abstract class BaseEntityRepository<
 
   async getUserRecommendation(limit: number, userId: string): Promise<any> {
     try {
-      console.log("User Id", userId)
       const res = await this.find(
         {
           _id: { $ne: new ObjectId(userId) },

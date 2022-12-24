@@ -13,13 +13,6 @@ export class UnfollowHandler
   async execute({ unfollowRequest }: UnfollowCommand): Promise<any> {
     const {username, whoToUnfollow} = unfollowRequest
     const resp = await this.userFactory.unfollow(username, whoToUnfollow)
-    // const { username } = confirmCodeRequest
-
-    console.log("excute unfollow", resp)
-
-    // this.eventPublisher.mergeObjectContext(
-    //   await this.userFactory.update(username, true)
-    // )
     return resp
   }
 }

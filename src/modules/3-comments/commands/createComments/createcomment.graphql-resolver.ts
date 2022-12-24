@@ -24,7 +24,6 @@ export class CreateCommentGraphqlResolver {
     ): Promise<CreateCommentResponseGraphql> {
 
         try {
-            console.log("USer", user)
             const { postId, comment, wasLikeByMe } = input
             const commentData = {
                 whoCommented: input.whoCommented,
@@ -36,8 +35,6 @@ export class CreateCommentGraphqlResolver {
             const command = new CreateCommentCommand(commentData)
 
             const resp: any = await this.commandBus.execute(command)
-
-            console.log("resp", resp)
 
             return resp
         } catch (err) {

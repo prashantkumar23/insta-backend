@@ -57,7 +57,6 @@ export class UserFactory implements EntityFactory<User> {
         email_verfied: boolean
     ): Promise<any> {
         const user = await this.userEntityRepository.findOneAndUpdateByUsername(username, email_verfied);
-        console.log("User in update", user)
         // user.apply(new UserUpdatedEvent())
         return user;
     }

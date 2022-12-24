@@ -24,8 +24,6 @@ export class SignUpGraphqlResolver {
 
         const resp: ISignUpResponse = await this.commandBus.execute(command)
 
-        console.log("ISignUpResponse", resp)
-
         return resp
     }
 }

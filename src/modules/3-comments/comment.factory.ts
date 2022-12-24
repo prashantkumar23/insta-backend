@@ -19,7 +19,6 @@ export class CommentFactory implements EntityFactory<Comment> {
         comment: string,
         wasLikeByMe: boolean
     ): Promise<Comment> {
-        console.log(postId, whoCommented)
         const commentDocument = new Comment(
             new ObjectId().toHexString(),
             new ObjectId(whoCommented),

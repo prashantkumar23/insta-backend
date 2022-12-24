@@ -17,8 +17,6 @@ export class UnfollowGraphqlResolver {
 
         const resp: IUnfollowResponseGraphQL = await this.commandBus.execute(command)
 
-        console.log("IUnfollowResponseGraphQL", resp)
-
         return {message: "Unfollowed!", isSuccess: true}
     }
 }

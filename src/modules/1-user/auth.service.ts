@@ -67,7 +67,6 @@ export class AuthService {
     }
 
     public async login({ username, password }: LoginRequest): Promise<IAWSLoginResponse | AWSError> {
-        console.log("CONFIG", this.config, this.clientId)
 
         let loginData: IAWSLoginResponse | AWSError
         try {
@@ -89,7 +88,6 @@ export class AuthService {
 
     public async logout({ AccessToken }: GlobalSignOutRequest): Promise<CognitoIdentityServiceProvider.Types.GlobalSignOutResponse | AWSError> {
         let cognitoService = new AWS.CognitoIdentityServiceProvider(this.config) // needs to refactored
-        console.log("Context Object", this.context)
         try {
             // cognitoService.revokeToken
             cognitoService.globalSignOut({ AccessToken }, (err: AWSError, data: CognitoIdentityServiceProvider.GlobalSignOutResponse) => {
@@ -151,7 +149,6 @@ export class AuthService {
             const data = await this.cognitoIdentity.confirmForgotPassword(params).promise();
 
             if (Object.keys(data).length === 0) return true
-            console.log("Reset Password", data);
             return false;
         } catch (error) {
             console.log("Reset Password Error", error);

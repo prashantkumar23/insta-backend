@@ -84,7 +84,6 @@ export class S3ImageUpload {
 
                 try {
                     const data = await uploadImage()
-                    console.log("Data", data)
                     return data
                 } catch (err) {
                     return err;

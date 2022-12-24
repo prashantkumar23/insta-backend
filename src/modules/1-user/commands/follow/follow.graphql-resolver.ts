@@ -17,8 +17,6 @@ export class FollowGraphqlResolver {
 
         const resp: IFollowResponseGraphQL = await this.commandBus.execute(command)
 
-        console.log("IFollowResponseGraphQL", resp)
-
         return {message: "Followed!", isSuccess: true}
     }
 }

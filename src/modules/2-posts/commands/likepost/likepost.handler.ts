@@ -18,7 +18,6 @@ export class LikePostHandler
             const { postId, userId } = likePostRequest;
             const post = await this.postFactory.updateLikeCount(postId, userId)
 
-            console.log("Respo" ,post)
             return post
         } catch (err) {
             return err
